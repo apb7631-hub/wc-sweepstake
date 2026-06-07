@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World Cup 2026 Sweepstake â€” Odds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:    #DC2626;
+      --red2:   #EF4444;
+      --gold:   #FBBF24;
+      --gold2:  #F59E0B;
+      --bg:     #0C0E14;
+      --bg2:    #13161F;
+      --bg3:    #1A1E2E;
+      --border: #252A3A;
+      --text:   #F0F4FF;
+      --muted:  #6B7499;
+    }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* â”€â”€ HERO BANNER â”€â”€ */
+    .hero {
+      background: linear-gradient(135deg, #0C0E14 0%, #1a0a0a 50%, #0C0E14 100%);
+      border-bottom: 3px solid var(--red);
+      padding: 40px 20px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 50% -20%, rgba(220,38,38,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 10% 110%, rgba(251,191,36,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.4rem, 8vw, 4.2rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 0.95;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      letter-spacing: 0.3px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      background: rgba(220,38,38,0.15);
+      border: 1px solid rgba(220,38,38,0.3);
+      border-radius: 4px;
+      padding: 5px 14px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--red2);
+    }
+
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--red2);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* â”€â”€ INFO STRIP â”€â”€ */
+    .info-strip {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .key-item {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .key-item b { color: var(--gold); margin-right: 4px; }
+
+    /* â”€â”€ TABLE SECTION â”€â”€ */
+    .table-section {
+      max-width: 960px;
+      margin: 32px auto;
+      padding: 0 16px 40px;
+    }
+
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+      border-left: 3px solid var(--red);
+      padding-left: 10px;
+    }
+
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead tr {
+      border-bottom: 2px solid var(--border);
+    }
+
+    thead th {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    thead th.c { text-align: center; }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s ease;
+      cursor: default;
+    }
+
+    tbody tr:hover { background: var(--bg3); }
+
+    tbody tr.rank-1 { background: rgba(251,191,36,0.06); }
+    tbody tr.rank-2 { background: rgba(251,191,36,0.03); }
+    tbody tr.rank-3 { background: rgba(180,100,40,0.04); }
+
+    td {
+      padding: 14px 14px;
+      vertical-align: middle;
+    }
+
+    td.c { text-align: center; }
+
+    /* Position */
+    .pos-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+    }
+
+    .medal {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+
+    .medal-1 { background: var(--gold);  color: #0C0E14; }
+    .medal-2 { background: #C0C8D8;      color: #0C0E14; }
+    .medal-3 { background: #CD7F32;      color: #fff; }
+    .medal-n { color: var(--muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.95rem; }
+
+    /* Player cell */
+    .player-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .team-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 5px;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--muted);
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 7px;
+      white-space: nowrap;
+    }
+
+    .tag.anchor {
+      color: var(--gold2);
+      border-color: rgba(245,158,11,0.35);
+      background: rgba(245,158,11,0.08);
+    }
+
+    /* Odds cell */
+    .odds-cell { text-align: center; }
+
+    .odds-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .odds-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Probability bar */
+    .prob-cell { min-width: 120px; }
+
+    .prob-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .prob-pct {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 5px;
+      background: var(--bg3);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--gold2), var(--gold));
+    }
+
+    /* Tier badge */
+    .tier {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 3px;
+      padding: 2px 8px;
+    }
+
+    .tier-S  { background: rgba(220,38,38,0.2);  color: #EF4444; border: 1px solid rgba(220,38,38,0.3); }
+    .tier-A  { background: rgba(251,191,36,0.12); color: var(--gold2); border: 1px solid rgba(251,191,36,0.25); }
+    .tier-Bp { background: rgba(96,165,250,0.1);  color: #60A5FA; border: 1px solid rgba(96,165,250,0.2); }
+    .tier-B  { background: rgba(107,116,153,0.15); color: var(--muted); border: 1px solid var(--border); }
+    .tier-Bm { background: rgba(107,116,153,0.08); color: #4A5275; border: 1px solid var(--border); }
+
+    /* Notes column */
+    .note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.4;
+      max-width: 280px;
+    }
+
+    .note strong { color: var(--text); font-weight: 600; }
+
+    /* â”€â”€ NARRATIVES â”€â”€ */
+    .narratives {
+      max-width: 960px;
+      margin: 0 auto 40px;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px 18px;
+    }
+
+    .card-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold2);
+      margin-bottom: 6px;
+    }
+
+    .card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* â”€â”€ FOOTER â”€â”€ */
+    .footer-bar {
+      text-align: center;
+      padding: 0 20px 40px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    /* â”€â”€ RESPONSIVE â”€â”€ */
+    @media (max-width: 600px) {
+      .note { display: none; }
+      .tag { font-size: 0.65rem; padding: 1px 5px; }
+      .player-name { font-size: 1rem; }
+      .odds-val { font-size: 1.25rem; }
+      td { padding: 11px 8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .dot { animation: none; }
+      tbody tr { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-eyebrow">FIFA World Cup 2026</div>
+    <h1>Sweepstake<br><em>Odds Board</em></h1>
+    <p class="hero-sub">Who wins the sweep? Pre-tournament odds based on team strength &amp; draw quality</p>
+    <div class="hero-badge">
+      <span class="dot"></span>
+      <span>Pre-Tournament Analysis</span>
+    </div>
+  </header>
+
+  <div class="info-strip">
+    <div class="key-item"><b>6/1</b> Favourite</div>
+    <div class="key-item"><b>33/1</b> Outsider</div>
+    <div class="key-item"><b>â­</b> Anchor = primary team</div>
+    <div class="key-item"><b>%</b> Implied probability</div>
+  </div>
+
+  <section class="table-section">
+    <div class="section-title">Outright Odds â€” Sweepstake Winner</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="c">#</th>
+            <th>Player</th>
+            <th class="c">Tier</th>
+            <th class="c">Odds</th>
+            <th>Probability</th>
+            <th>Key Note</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="table-section" style="margin-top:-16px">
+    <div class="section-title">Key Narratives</div>
+  </div>
+
+  <div class="narratives" id="narratives"></div>
+
+  <div class="footer-bar">
+    Odds based on FIFA rankings, recent tournament form &amp; 2026 WC qualification projections &bull; All 48 teams assigned &bull; Pre-tournament only
+  </div>
+
+<script>
+  const data = [
+    {
+      name: "Sam",
+      teams: ["Spain","Croatia","Egypt","CuraÃ§ao"],
+      anchors: ["Spain","Croatia"],
+      tier: "S",
+      odds: "6/1",
+      pct: 14,
+      note: "<strong>Best draw.</strong> Two legitimate contenders. Spain are 2024 Euro champions & WC favourites. Croatia's pedigree (2018 finalists, 2022 3rd) adds real depth."
+    },
+    {
+      name: "WAP",
+      teams: ["France","Australia","Iran","Panama"],
+      anchors: ["France"],
+      tier: "S",
+      odds: "6/1",
+      pct: 13,
+      note: "<strong>France are joint-favourites.</strong> Everything rides on Les Bleus. Australia/Iran/Panama won't contribute much beyond the group stage."
+    },
+    {
+      name: "Bash",
+      teams: ["Argentina","Japan","Saudi Arabia","Jordan"],
+      anchors: ["Argentina"],
+      tier: "S",
+      odds: "7/1",
+      pct: 12,
+      note: "<strong>Reigning champions.</strong> Argentina are still elite. Japan can sneak a round of 16. Saudi/Jordan add little beyond group stage points."
+    },
+    {
+      name: "Lex",
+      teams: ["Brazil","Austria","Tunisia","Cape Verde"],
+      anchors: ["Brazil"],
+      tier: "A",
+      odds: "8/1",
+      pct: 11,
+      note: "<strong>Brazil's ceiling is as high as anyone's.</strong> Austria & Tunisia can chip in group stage points. Cape Verde are largely dead weight."
+    },
+    {
+      name: "Hish",
+      teams: ["England","Senegal","Paraguay","Qatar"],
+      anchors: ["England","Senegal"],
+      tier: "A",
+      odds: "9/1",
+      pct: 10,
+      note: "<strong>England are dangerous.</strong> If they click they can go very deep. Senegal as a solid second seed is a genuine asset. Paraguay/Qatar minimal help."
+    },
+    {
+      name: "Sly",
+      teams: ["Portugal","Switzerland","Norway","South Africa"],
+      anchors: ["Portugal","Switzerland","Norway"],
+      tier: "A",
+      odds: "9/1",
+      pct: 9.5,
+      note: "<strong>Most balanced mid-tier draw.</strong> No WC favourite but three QF-capable teams. Wins if Portugal goes deep AND Switzerland/Norway both clear the group."
+    },
+    {
+      name: "Toff",
+      teams: ["Germany","Ecuador","Scotland","DR Congo"],
+      anchors: ["Germany"],
+      tier: "A",
+      odds: "10/1",
+      pct: 9,
+      note: "<strong>Germany are rebuilding but dangerous.</strong> Ecuador & Scotland can score group stage points. DR Congo are an African wildcard."
+    },
+    {
+      name: "Saad",
+      teams: ["Netherlands","Morocco","Turkey","Iraq"],
+      anchors: ["Netherlands","Morocco"],
+      tier: "B+",
+      odds: "11/1",
+      pct: 8,
+      note: "<strong>Solid double-header.</strong> Netherlands are dark horses, Morocco shocked everyone in 2022. Needs both to go deep simultaneously to win the sweep."
+    },
+    {
+      name: "Naj",
+      teams: ["Belgium","Ivory Coast","Sweden","New Zealand"],
+      anchors: ["Belgium"],
+      tier: "B",
+      odds: "18/1",
+      pct: 5,
+      note: "<strong>Belgium's golden generation is fading.</strong> De Bruyne is ageing, squad depth is thin. Ivory Coast & Sweden earn group points but won't go far."
+    },
+    {
+      name: "QC",
+      teams: ["Colombia","Canada","Algeria","Ghana"],
+      anchors: ["Colombia","Canada"],
+      tier: "B",
+      odds: "25/1",
+      pct: 4,
+      note: "<strong>Colombia are underrated.</strong> Canada as hosts could surprise. Neither is a realistic WC winner without a run of major upsets."
+    },
+    {
+      name: "KB",
+      teams: ["Uruguay","USA","Bosnia-Herzegovina","Uzbekistan"],
+      anchors: ["Uruguay","USA"],
+      tier: "B",
+      odds: "25/1",
+      pct: 4,
+      note: "<strong>Uruguay punch above their weight</strong> but lack elite ceiling. USA as hosts will be raucous and can make the knockouts. Bosnia/Uzbekistan are dead weight."
+    },
+    {
+      name: "Foo",
+      teams: ["Mexico","South Korea","Czechia","Haiti"],
+      anchors: ["Mexico","South Korea"],
+      tier: "B-",
+      odds: "33/1",
+      pct: 3,
+      note: "<strong>Weakest draw.</strong> Mexico historically stall at the round of 16. South Korea need everything to go right. Czechia modest. Haiti are a group-stage exit."
+    },
+  ];
+
+  const tierClass = { "S": "tier-S", "A": "tier-A", "B+": "tier-Bp", "B": "tier-B", "B-": "tier-Bm" };
+  const maxPct = 14;
+
+  const tbody = document.getElementById("tbody");
+
+  data.forEach((p, i) => {
+    const pos = i + 1;
+    const rankClass = pos <= 3 ? `rank-${pos}` : "";
+
+    let badge;
+    if (pos === 1) badge = `<span class="medal medal-1">1</span>`;
+    else if (pos === 2) badge = `<span class="medal medal-2">2</span>`;
+    else if (pos === 3) badge = `<span class="medal medal-3">3</span>`;
+    else badge = `<span class="medal-n">${pos}</span>`;
+
+    const tags = p.teams.map(t => {
+      const isAnchor = p.anchors.includes(t);
+      return `<span class="tag${isAnchor ? ' anchor' : ''}">${isAnchor ? 'â­ ' : ''}${t}</span>`;
+    }).join("");
+
+    const barW = ((p.pct / maxPct) * 100).toFixed(1);
+
+    tbody.innerHTML += `
+      <tr class="${rankClass}">
+        <td class="c"><div class="pos-wrap">${badge}</div></td>
+        <td>
+          <div class="player-name">${p.name}</div>
+          <div class="team-tags">${tags}</div>
+        </td>
+        <td class="c"><span class="tier ${tierClass[p.tier]}">${p.tier}</span></td>
+        <td class="odds-cell">
+          <div class="odds-val">${p.odds}</div>
+          <div class="odds-label">odds</div>
+        </td>
+        <td class="prob-cell">
+          <div class="prob-row">
+            <span class="prob-pct">${p.pct}%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:${barW}%"></div></div>
+          </div>
+        </td>
+        <td class="note">${p.note}</td>
+      </tr>`;
+  });
+
+  // Narrative cards
+  const narratives = [
+    {
+      label: "Value Pick",
+      title: "Sam â€” The Best Draw",
+      body: "Two legitimate semi-final contenders in the same hand is rare. Spain as tournament favourites plus Croatia (2018 finalists, 2022 3rd) gives the best floor and ceiling of anyone in the sweep."
+    },
+    {
+      label: "Giant Clash",
+      title: "WAP vs Bash vs Lex",
+      body: "Pure coin flip on which giant goes deepest. France, Argentina, and Brazil are all ~13% WC winners individually. Whoever drew the one that lifts the trophy will win the sweep â€” full stop."
+    },
+    {
+      label: "Dark Horse",
+      title: "Sly â€” The Accumulator",
+      body: "The only player without one elite team who compensates with three solid teams. If there's a chaotic knockout stage with upsets, Sly quietly racks up points across the board."
+    },
+    {
+      label: "Sympathy Pick",
+      title: "Foo â€” Tough Draw",
+      body: "Mexico, South Korea, Czechia, and Haiti is rough. Mexico have underperformed for a decade, and the other three are unlikely to trouble the back end of the tournament."
+    },
+    {
+      label: "Sleeper",
+      title: "Saad â€” Morocco Effect",
+      body: "Morocco were 2022's biggest story. If they run it back, combined with a deep Netherlands run, Saad has a genuine shot. Both peaking simultaneously is the dream scenario."
+    },
+    {
+      label: "Fading Glory",
+      title: "Naj â€” Belgium's Last Dance?",
+      body: "Belgium's golden generation is on borrowed time. If De Bruyne and Lukaku find one last gear, Naj could surprise. But this squad isn't what it was in 2018."
+    },
+  ];
+
+  const narrativesEl = document.getElementById("narratives");
+  narratives.forEach(n => {
+    narrativesEl.innerHTML += `
+      <div class="card">
+        <div class="card-label">${n.label}</div>
+        <div class="card-title">${n.title}</div>
+        <p>${n.body}</p>
+      </div>`;
+  });
+</script>
+</body>
+</html>
