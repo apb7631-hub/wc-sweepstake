@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Table — WC2026 Sweepstake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #DC2626; --red2: #EF4444;
+      --gold: #FBBF24; --gold2: #F59E0B;
+      --bg: #0C0E14; --bg2: #13161F; --bg3: #1A1E2E;
+      --border: #252A3A; --text: #F0F4FF; --muted: #6B7499;
+    }
+    body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    .hero {
+      background: linear-gradient(135deg, #0C0E14 0%, #1a0a0a 50%, #0C0E14 100%);
+      border-bottom: 3px solid var(--red); padding: 40px 20px 32px; text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% -20%, rgba(220,38,38,0.18) 0%, transparent 70%); pointer-events: none; }
+    .hero-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2.4rem, 8vw, 4.2rem); font-weight: 800; text-transform: uppercase; line-height: 0.95; color: #fff; letter-spacing: -0.5px; }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+    .hero-sub { margin-top: 10px; font-size: 0.88rem; color: var(--muted); }
+    .hero-badge { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; background: rgba(220,38,38,0.15); border: 1px solid rgba(220,38,38,0.3); border-radius: 4px; padding: 5px 14px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--red2); }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red2); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.4; transform:scale(0.7); } }
+
+    .scoring-strip { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+    .key-item { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+    .key-item b { color: var(--gold); margin-right: 4px; }
+
+    .table-section { max-width: 860px; margin: 32px auto; padding: 0 16px 40px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { border-bottom: 2px solid var(--border); }
+    thead th { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); padding: 10px 14px; text-align: left; }
+    thead th.c { text-align: center; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+    tbody tr:hover { background: var(--bg3); }
+    tbody tr.rank-1 { background: rgba(251,191,36,0.06); }
+    tbody tr.rank-2 { background: rgba(180,180,200,0.04); }
+    tbody tr.rank-3 { background: rgba(180,100,40,0.04); }
+    td { padding: 14px 14px; vertical-align: middle; }
+    td.c { text-align: center; }
+
+    .pos-wrap { display: flex; align-items: center; justify-content: center; width: 32px; }
+    .medal { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 0.85rem; }
+    .medal-1 { background: var(--gold); color: #0C0E14; }
+    .medal-2 { background: #C0C8D8; color: #0C0E14; }
+    .medal-3 { background: #CD7F32; color: #fff; }
+    .medal-n { color: var(--muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.95rem; }
+
+    .player-name { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #fff; line-height: 1.1; }
+    .team-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+    .tag { font-size: 0.7rem; font-weight: 500; color: var(--muted); background: var(--bg3); border: 1px solid var(--border); border-radius: 3px; padding: 2px 7px; white-space: nowrap; }
+    .stat { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 600; color: #8898BB; text-align: center; }
+    .pts-cell { text-align: center; }
+    .pts-val { font-family: 'Barlow Condensed', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--gold); line-height: 1; }
+    .pts-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+
+    /* Loading / Error states */
+    .state-box { text-align: center; padding: 60px 20px; }
+    .state-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 800; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .state-sub { font-size: 0.85rem; color: var(--muted); }
+    .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--red); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 16px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .footer-bar { text-align: center; padding: 0 20px 40px; font-size: 0.78rem; color: var(--muted); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.5px; }
+    .footer-bar a { color: var(--muted); text-decoration: none; margin: 0 8px; }
+    .footer-bar a:hover { color: var(--gold); }
+
+    /* Code badge */
+    .code-badge { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; padding: 4px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; color: var(--muted); cursor: pointer; }
+    .code-badge:hover { border-color: var(--gold); color: var(--gold); }
+
+    @media (max-width: 500px) {
+      .tag { font-size: 0.65rem; padding: 1px 5px; }
+      .player-name { font-size: 1rem; }
+      .pts-val { font-size: 1.3rem; }
+      td { padding: 11px 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .dot { animation: none; } tbody tr { transition: none; } }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-eyebrow">FIFA World Cup 2026</div>
+  <h1 id="group-title">Sweepstake<br><em>League Table</em></h1>
+  <p class="hero-sub">4 teams per player &bull; Points tallied after every match</p>
+  <div class="hero-badge"><span class="dot"></span><span id="status-label">Loading...</span></div>
+  <div class="code-badge" id="code-badge" onclick="copyCode()" title="Click to copy group code">Group Code: <strong id="code-display">——</strong></div>
+</header>
+
+<div class="scoring-strip">
+  <div class="key-item"><b>3</b> Win</div>
+  <div class="key-item"><b>1</b> Draw</div>
+  <div class="key-item"><b>0</b> Loss</div>
+</div>
+
+<section class="table-section">
+  <div id="table-container">
+    <div class="state-box">
+      <div class="spinner"></div>
+      <div class="state-title">Loading table...</div>
+    </div>
+  </div>
+</section>
+
+<div class="footer-bar" id="footer-bar">
+  <a href="landing.html">← Create your own sweep</a>
+  &bull;
+  <span id="last-updated">—</span>
+  &bull;
+  <a href="#" id="admin-link">Admin Panel</a>
+</div>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const sb = initSupabase();
+  let group = null;
+  let players = [];
+  let channel = null;
+
+  async function init() {
+    const code = getParam('code');
+    if (!code) { showError('No group code found in URL.', 'Add ?code=XXXXXX to the URL'); return; }
+
+    document.getElementById('code-display').textContent = code.toUpperCase();
+    document.getElementById('admin-link').href = `admin.html?code=${code.toUpperCase()}`;
+
+    // Load group
+    const { data: grp, error: grpErr } = await sb.from('groups').select('*').eq('code', code.toUpperCase()).single();
+    if (grpErr || !grp) { showError('Group not found', `No sweepstake with code "${code.toUpperCase()}" was found.`); return; }
+    group = grp;
+
+    // Set title
+    document.getElementById('group-title').innerHTML = `${escHtml(grp.name)}<br><em>League Table</em>`;
+    document.title = `${grp.name} — WC2026 Sweepstake`;
+
+    // Load players
+    const { data: pl } = await sb.from('players').select('*').eq('group_id', grp.id).order('created_at');
+    players = pl || [];
+
+    await render();
+
+    document.getElementById('status-label').textContent = 'Live — updates automatically';
+
+    // Real-time subscription
+    channel = sb.channel(`results-${grp.id}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'results', filter: `group_id=eq.${grp.id}` }, render)
+      .subscribe();
+  }
+
+  async function render() {
+    const { data: results } = await sb.from('results').select('*').eq('group_id', group.id);
+
+    // Tally per team
+    const tally = {};
+    (results || []).forEach(r => {
+      if (!tally[r.team]) tally[r.team] = { w: 0, d: 0, l: 0 };
+      tally[r.team][r.result]++;
+    });
+
+    // Aggregate per player
+    const enriched = players.map(p => {
+      let w = 0, d = 0, l = 0;
+      p.teams.forEach(t => {
+        const td = tally[t] || { w: 0, d: 0, l: 0 };
+        w += td.w; d += td.d; l += td.l;
+      });
+      return { ...p, w, d, l, pts: w * 3 + d };
+    });
+
+    enriched.sort((a, b) => b.pts - a.pts || b.w - a.w || b.d - a.d);
+
+    const container = document.getElementById('table-container');
+    container.innerHTML = `
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th class="c">#</th>
+            <th>Player</th>
+            <th class="c">W</th><th class="c">D</th><th class="c">L</th>
+            <th class="c">PTS</th>
+          </tr></thead>
+          <tbody>${enriched.map((p, i) => rowHtml(p, i + 1)).join('')}</tbody>
+        </table>
+      </div>`;
+
+    // Footer timestamp
+    const latest = (results || []).sort((a, b) => new Date(b.logged_at) - new Date(a.logged_at))[0];
+    document.getElementById('last-updated').textContent = latest
+      ? 'Updated ' + new Date(latest.logged_at).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+      : 'No results yet';
+  }
+
+  function rowHtml(p, pos) {
+    const rankClass = pos <= 3 ? `rank-${pos}` : '';
+    const badge = pos === 1 ? `<span class="medal medal-1">1</span>`
+      : pos === 2 ? `<span class="medal medal-2">2</span>`
+      : pos === 3 ? `<span class="medal medal-3">3</span>`
+      : `<span class="medal-n">${pos}</span>`;
+    const tags = p.teams.map(t => `<span class="tag">${escHtml(t)}</span>`).join('');
+    return `
+      <tr class="${rankClass}">
+        <td class="c"><div class="pos-wrap">${badge}</div></td>
+        <td><div class="player-name">${escHtml(p.name)}</div><div class="team-tags">${tags}</div></td>
+        <td class="stat">${p.w}</td>
+        <td class="stat">${p.d}</td>
+        <td class="stat">${p.l}</td>
+        <td class="pts-cell"><div class="pts-val">${p.pts}</div><div class="pts-label">pts</div></td>
+      </tr>`;
+  }
+
+  function showError(title, sub) {
+    document.getElementById('table-container').innerHTML = `
+      <div class="state-box">
+        <div class="state-title">${escHtml(title)}</div>
+        <p class="state-sub">${escHtml(sub)}</p>
+        <br><a href="landing.html" style="color:var(--gold)">← Create a new sweep</a>
+      </div>`;
+    document.getElementById('status-label').textContent = 'Error';
+  }
+
+  function copyCode() {
+    const code = document.getElementById('code-display').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      const b = document.getElementById('code-badge');
+      b.innerHTML = `Group Code: <strong>Copied!</strong>`;
+      setTimeout(() => { b.innerHTML = `Group Code: <strong>${code}</strong>`; }, 1500);
+    });
+  }
+
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  init();
+</script>
+</body>
+</html>
