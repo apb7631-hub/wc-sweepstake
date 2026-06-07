@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — WC2026 Sweepstake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:    #DC2626;
+      --red2:   #EF4444;
+      --gold:   #FBBF24;
+      --gold2:  #F59E0B;
+      --green:  #22C55E;
+      --green2: #16A34A;
+      --blue:   #60A5FA;
+      --bg:     #0C0E14;
+      --bg2:    #13161F;
+      --bg3:    #1A1E2E;
+      --border: #252A3A;
+      --text:   #F0F4FF;
+      --muted:  #6B7499;
+    }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── PASSWORD GATE ── */
+    #gate {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 20px;
+    }
+
+    .gate-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--red);
+      border-radius: 8px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+
+    .gate-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .gate-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .gate-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .gate-input {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 12px 16px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+      margin-bottom: 12px;
+      transition: border-color 0.15s;
+      text-align: center;
+      letter-spacing: 4px;
+    }
+
+    .gate-input:focus { border-color: var(--red); }
+    .gate-input.error { border-color: var(--red2); animation: shake 0.3s; }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-6px); }
+      75%      { transform: translateX(6px); }
+    }
+
+    .gate-btn {
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 12px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .gate-btn:hover { background: var(--red2); }
+
+    .gate-error {
+      font-size: 0.78rem;
+      color: var(--red2);
+      margin-top: 10px;
+      min-height: 18px;
+    }
+
+    /* ── MAIN APP (hidden until authed) ── */
+    #app { display: none; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #0C0E14 0%, #1a0a0a 50%, #0C0E14 100%);
+      border-bottom: 3px solid var(--red);
+      padding: 28px 20px 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% -20%, rgba(220,38,38,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .hero h1 em { font-style: normal; color: var(--gold); }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover { border-color: var(--muted); color: var(--text); }
+
+    .btn-danger {
+      background: rgba(220,38,38,0.12);
+      border: 1px solid rgba(220,38,38,0.3);
+      color: var(--red2);
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-danger:hover { background: rgba(220,38,38,0.25); }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--text);
+      z-index: 100;
+      transition: transform 0.25s ease;
+      white-space: nowrap;
+    }
+
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── LAST UPDATED BAR ── */
+    .updated-bar {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .updated-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .updated-text span { color: var(--gold); }
+
+    /* ── CONTENT ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 16px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ── PLAYER CARD ── */
+    .player-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .player-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .player-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #fff;
+      flex: 1;
+    }
+
+    .player-pts {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .player-pts-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-left: 2px;
+    }
+
+    /* ── TEAM ROW ── */
+    .team-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .team-row:last-child { border-bottom: none; }
+
+    .team-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: var(--text);
+      min-width: 140px;
+      flex: 1;
+    }
+
+    .team-record {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .rec {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+      min-width: 38px;
+      text-align: center;
+    }
+
+    .rec-w { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+    .rec-d { background: rgba(251,191,36,0.1);  color: var(--gold2); border: 1px solid rgba(251,191,36,0.25); }
+    .rec-l { background: rgba(220,38,38,0.1);   color: var(--red2);  border: 1px solid rgba(220,38,38,0.25); }
+
+    .team-btns {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .result-btn {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+
+    .btn-w { background: rgba(34,197,94,0.15);  color: var(--green);  border: 1px solid rgba(34,197,94,0.3); }
+    .btn-w:hover { background: rgba(34,197,94,0.3); }
+
+    .btn-d { background: rgba(251,191,36,0.12); color: var(--gold2);  border: 1px solid rgba(251,191,36,0.3); }
+    .btn-d:hover { background: rgba(251,191,36,0.28); }
+
+    .btn-l { background: rgba(220,38,38,0.12);  color: var(--red2);   border: 1px solid rgba(220,38,38,0.3); }
+    .btn-l:hover { background: rgba(220,38,38,0.28); }
+
+    .btn-undo {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 4px;
+      padding: 7px 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.12s;
+      line-height: 1;
+    }
+
+    .btn-undo:hover { border-color: var(--muted); color: var(--text); }
+    .btn-undo:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    /* history pills */
+    .history-pills {
+      display: flex;
+      gap: 3px;
+      flex-wrap: wrap;
+      min-width: 60px;
+    }
+
+    .pill {
+      width: 14px; height: 14px;
+      border-radius: 2px;
+      font-size: 0;
+    }
+
+    .pill-w { background: var(--green2); }
+    .pill-d { background: var(--gold2); }
+    .pill-l { background: var(--red); }
+
+    /* ── CONFIRM MODAL ── */
+    #modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    #modal-overlay.open { display: flex; }
+
+    .modal-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--red);
+      border-radius: 8px;
+      padding: 32px 28px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .modal-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .modal-body {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .modal-actions { display: flex; gap: 10px; }
+
+    .modal-cancel {
+      flex: 1;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 5px;
+      padding: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .modal-confirm {
+      flex: 1;
+      background: var(--red);
+      border: none;
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .modal-confirm:hover { background: var(--red2); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 560px) {
+      .team-name { min-width: 100px; font-size: 0.88rem; }
+      .result-btn { padding: 6px 10px; font-size: 0.75rem; }
+      .history-pills { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-eyebrow">FIFA World Cup 2026</div>
+    <div class="gate-title">Admin Panel</div>
+    <p class="gate-sub">Enter the password to manage match results</p>
+    <input type="password" id="pw-input" class="gate-input" placeholder="••••••••" autocomplete="current-password" />
+    <button class="gate-btn" onclick="checkPassword()">Unlock</button>
+    <div class="gate-error" id="gate-error"></div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+
+  <header class="hero">
+    <div class="hero-eyebrow">FIFA World Cup 2026 — Admin</div>
+    <h1>Results <em>Panel</em></h1>
+    <div class="hero-actions">
+      <a href="index.html" class="btn-secondary">← Live Table</a>
+      <button class="btn-secondary" onclick="logout()">Log Out</button>
+      <button class="btn-danger" onclick="openResetModal()">Reset All Data</button>
+    </div>
+  </header>
+
+  <div class="updated-bar">
+    <div class="updated-text">Last updated: <span id="last-updated">—</span></div>
+    <div class="updated-text">Total matches logged: <span id="total-matches">0</span></div>
+  </div>
+
+  <div class="content" id="content"></div>
+
+</div>
+
+<!-- CONFIRM MODAL -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title">Reset All Data?</div>
+    <p class="modal-body">This will wipe every result for all 48 teams. The league table will go back to zero. This cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-confirm" onclick="resetAll()">Yes, Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+  // ── CONFIG ──────────────────────────────────────────────
+  const PASSWORD     = "WC2026!";          // change this to whatever you like
+  const STORAGE_KEY  = "sweepstake_data";
+  const SESSION_KEY  = "sweepstake_auth";
+  // ────────────────────────────────────────────────────────
+
+  const players = [
+    { name: "Lex",  teams: ["Brazil","Austria","Tunisia","Cape Verde"] },
+    { name: "KB",   teams: ["Uruguay","USA","Bosnia Herzegovina","Uzbekistan"] },
+    { name: "WOP",  teams: ["France","Australia","Iran","Panama"] },
+    { name: "Bash", teams: ["Argentina","Japan","Saudi Arabia","Jordan"] },
+    { name: "Fou",  teams: ["Mexico","South Korea","Czechia","Haiti"] },
+    { name: "Hish", teams: ["England","Senegal","Paraguay","Qatar"] },
+    { name: "SLY",  teams: ["Portugal","Switzerland","Norway","South Africa"] },
+    { name: "QC",   teams: ["Colombia","Canada","Algeria","Ghana"] },
+    { name: "Saad", teams: ["Netherlands","Morocco","Turkey","Iraq"] },
+    { name: "Sam",  teams: ["Spain","Croatia","Egypt","Curaçao"] },
+    { name: "Naj",  teams: ["Belgium","Ivory Coast","Sweden","New Zealand"] },
+    { name: "Toff", teams: ["Germany","Ecuador","Scotland","DR Congo"] },
+  ];
+
+  // ── AUTH ────────────────────────────────────────────────
+  function checkPassword() {
+    const val = document.getElementById("pw-input").value;
+    if (val === PASSWORD) {
+      sessionStorage.setItem(SESSION_KEY, "1");
+      document.getElementById("gate").style.display = "none";
+      document.getElementById("app").style.display = "block";
+      renderAll();
+    } else {
+      const inp = document.getElementById("pw-input");
+      const err = document.getElementById("gate-error");
+      inp.classList.add("error");
+      err.textContent = "Incorrect password. Try again.";
+      setTimeout(() => inp.classList.remove("error"), 400);
+      inp.value = "";
+    }
+  }
+
+  function logout() {
+    sessionStorage.removeItem(SESSION_KEY);
+    location.reload();
+  }
+
+  document.getElementById("pw-input").addEventListener("keydown", e => {
+    if (e.key === "Enter") checkPassword();
+  });
+
+  // Check session on load
+  if (sessionStorage.getItem(SESSION_KEY) === "1") {
+    document.getElementById("gate").style.display = "none";
+    document.getElementById("app").style.display = "block";
+  }
+
+  // ── DATA ────────────────────────────────────────────────
+  function loadData() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+    catch { return {}; }
+  }
+
+  function saveData(data) {
+    data.__lastUpdated = new Date().toISOString();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    updateMeta(data);
+  }
+
+  function getTeam(data, team) {
+    return data[team] || { w: 0, d: 0, l: 0, history: [] };
+  }
+
+  function updateMeta(data) {
+    const ts = data.__lastUpdated
+      ? new Date(data.__lastUpdated).toLocaleString("en-GB", { day:"numeric", month:"short", hour:"2-digit", minute:"2-digit" })
+      : "—";
+    document.getElementById("last-updated").textContent = ts;
+
+    let total = 0;
+    players.forEach(p => p.teams.forEach(t => {
+      total += (getTeam(data, t).history || []).length;
+    }));
+    document.getElementById("total-matches").textContent = total;
+  }
+
+  // ── RESULT LOGGING ──────────────────────────────────────
+  function logResult(team, result) {
+    const data = loadData();
+    const td = getTeam(data, team);
+    td[result]++;
+    td.history = [...(td.history || []), result];
+    data[team] = td;
+    saveData(data);
+    renderAll();
+    showToast(`${team} — ${result === "w" ? "Win ✓" : result === "d" ? "Draw ✓" : "Loss ✓"}`);
+  }
+
+  function undoResult(team) {
+    const data = loadData();
+    const td = getTeam(data, team);
+    if (!td.history || td.history.length === 0) return;
+    const last = td.history.pop();
+    td[last] = Math.max(0, (td[last] || 0) - 1);
+    data[team] = td;
+    saveData(data);
+    renderAll();
+    showToast(`${team} — last result undone`);
+  }
+
+  // ── RENDER ──────────────────────────────────────────────
+  function playerPts(data, player) {
+    let w = 0, d = 0, l = 0;
+    player.teams.forEach(t => {
+      const td = getTeam(data, t);
+      w += td.w; d += td.d; l += td.l;
+    });
+    return { w, d, l, pts: w * 3 + d };
+  }
+
+  function renderAll() {
+    const data = loadData();
+    updateMeta(data);
+
+    const content = document.getElementById("content");
+    content.innerHTML = "";
+
+    players.forEach(player => {
+      const totals = playerPts(data, player);
+
+      const card = document.createElement("div");
+      card.className = "player-card";
+
+      card.innerHTML = `
+        <div class="player-header">
+          <div class="player-label">${player.name}</div>
+          <div>
+            <span class="player-pts">${totals.pts}</span>
+            <span class="player-pts-label">pts</span>
+            &nbsp;
+            <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;color:var(--muted);">
+              ${totals.w}W ${totals.d}D ${totals.l}L
+            </span>
+          </div>
+        </div>
+        ${player.teams.map(team => {
+          const td = getTeam(data, team);
+          const hist = (td.history || []);
+          const pills = hist.slice(-12).map(r => `<div class="pill pill-${r}" title="${r.toUpperCase()}"></div>`).join("");
+          return `
+          <div class="team-row">
+            <div class="team-name">${team}</div>
+            <div class="team-record">
+              <span class="rec rec-w">${td.w}W</span>
+              <span class="rec rec-d">${td.d}D</span>
+              <span class="rec rec-l">${td.l}L</span>
+            </div>
+            <div class="history-pills">${pills}</div>
+            <div class="team-btns">
+              <button class="result-btn btn-w" data-team="${team}" data-result="w" onclick="logResult(this.dataset.team,this.dataset.result)">W</button>
+              <button class="result-btn btn-d" data-team="${team}" data-result="d" onclick="logResult(this.dataset.team,this.dataset.result)">D</button>
+              <button class="result-btn btn-l" data-team="${team}" data-result="l" onclick="logResult(this.dataset.team,this.dataset.result)">L</button>
+              <button class="btn-undo" data-team="${team}" onclick="undoResult(this.dataset.team)" title="Undo last result" ${hist.length === 0 ? "disabled" : ""}>↩</button>
+            </div>
+          </div>`;
+        }).join("")}
+      `;
+
+      content.appendChild(card);
+    });
+  }
+
+  // ── RESET ───────────────────────────────────────────────
+  function openResetModal() {
+    document.getElementById("modal-overlay").classList.add("open");
+  }
+
+  function closeModal() {
+    document.getElementById("modal-overlay").classList.remove("open");
+  }
+
+  function resetAll() {
+    localStorage.removeItem(STORAGE_KEY);
+    closeModal();
+    renderAll();
+    showToast("All data reset to zero", true);
+  }
+
+  // ── TOAST ───────────────────────────────────────────────
+  let toastTimer;
+  function showToast(msg, danger = false) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.style.borderLeftColor = danger ? "var(--red)" : "var(--green)";
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+  }
+
+  // ── INIT ────────────────────────────────────────────────
+  if (sessionStorage.getItem(SESSION_KEY) === "1") {
+    renderAll();
+  }
+</script>
+</body>
+</html>
