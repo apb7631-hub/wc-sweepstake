@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>World Cup 2026 Sweepstake â€” Odds</title>
+  <title>World Cup 2026 Sweepstake — Odds Board</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -31,7 +31,7 @@
       padding: 0;
     }
 
-    /* â”€â”€ HERO BANNER â”€â”€ */
+    /* ── HERO ── */
     .hero {
       background: linear-gradient(135deg, #0C0E14 0%, #1a0a0a 50%, #0C0E14 100%);
       border-bottom: 3px solid var(--red);
@@ -71,10 +71,7 @@
       letter-spacing: -0.5px;
     }
 
-    .hero h1 em {
-      font-style: normal;
-      color: var(--gold);
-    }
+    .hero h1 em { font-style: normal; color: var(--gold); }
 
     .hero-sub {
       margin-top: 12px;
@@ -112,8 +109,8 @@
       50%       { opacity: 0.4; transform: scale(0.7); }
     }
 
-    /* â”€â”€ INFO STRIP â”€â”€ */
-    .info-strip {
+    /* ── SCORING STRIP ── */
+    .scoring-strip {
       background: var(--bg2);
       border-bottom: 1px solid var(--border);
       padding: 10px 20px;
@@ -134,11 +131,11 @@
 
     .key-item b { color: var(--gold); margin-right: 4px; }
 
-    /* â”€â”€ TABLE SECTION â”€â”€ */
+    /* ── SECTION ── */
     .table-section {
-      max-width: 960px;
-      margin: 32px auto;
-      padding: 0 16px 40px;
+      max-width: 1060px;
+      margin: 32px auto 0;
+      padding: 0 16px;
     }
 
     .section-title {
@@ -155,14 +152,9 @@
 
     .table-wrap { overflow-x: auto; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    table { width: 100%; border-collapse: collapse; }
 
-    thead tr {
-      border-bottom: 2px solid var(--border);
-    }
+    thead tr { border-bottom: 2px solid var(--border); }
 
     thead th {
       font-family: 'Barlow Condensed', sans-serif;
@@ -180,29 +172,18 @@
     tbody tr {
       border-bottom: 1px solid var(--border);
       transition: background 0.15s ease;
-      cursor: default;
     }
 
     tbody tr:hover { background: var(--bg3); }
-
-    tbody tr.rank-1 { background: rgba(251,191,36,0.06); }
-    tbody tr.rank-2 { background: rgba(251,191,36,0.03); }
+    tbody tr.rank-1 { background: rgba(251,191,36,0.07); }
+    tbody tr.rank-2 { background: rgba(251,191,36,0.04); }
     tbody tr.rank-3 { background: rgba(180,100,40,0.04); }
 
-    td {
-      padding: 14px 14px;
-      vertical-align: middle;
-    }
-
+    td { padding: 14px 14px; vertical-align: middle; }
     td.c { text-align: center; }
 
     /* Position */
-    .pos-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-    }
+    .pos-wrap { display: flex; align-items: center; justify-content: center; width: 32px; }
 
     .medal {
       width: 28px; height: 28px;
@@ -213,12 +194,12 @@
       font-size: 0.85rem;
     }
 
-    .medal-1 { background: var(--gold);  color: #0C0E14; }
-    .medal-2 { background: #C0C8D8;      color: #0C0E14; }
-    .medal-3 { background: #CD7F32;      color: #fff; }
+    .medal-1 { background: var(--gold); color: #0C0E14; }
+    .medal-2 { background: #C0C8D8;    color: #0C0E14; }
+    .medal-3 { background: #CD7F32;    color: #fff; }
     .medal-n { color: var(--muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.95rem; }
 
-    /* Player cell */
+    /* Player */
     .player-name {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 1.2rem;
@@ -229,12 +210,7 @@
       line-height: 1.1;
     }
 
-    .team-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-top: 5px;
-    }
+    .team-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
 
     .tag {
       font-size: 0.7rem;
@@ -253,7 +229,25 @@
       background: rgba(245,158,11,0.08);
     }
 
-    /* Odds cell */
+    /* Tier */
+    .tier {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 3px;
+      padding: 2px 8px;
+    }
+
+    .tier-S  { background: rgba(220,38,38,0.2);   color: #EF4444;       border: 1px solid rgba(220,38,38,0.3); }
+    .tier-A  { background: rgba(251,191,36,0.12);  color: var(--gold2);  border: 1px solid rgba(251,191,36,0.25); }
+    .tier-Bp { background: rgba(96,165,250,0.1);   color: #60A5FA;       border: 1px solid rgba(96,165,250,0.2); }
+    .tier-B  { background: rgba(107,116,153,0.15); color: var(--muted);  border: 1px solid var(--border); }
+    .tier-Bm { background: rgba(107,116,153,0.08); color: #4A5275;       border: 1px solid var(--border); }
+
+    /* Odds */
     .odds-cell { text-align: center; }
 
     .odds-val {
@@ -273,14 +267,30 @@
       color: var(--muted);
     }
 
-    /* Probability bar */
-    .prob-cell { min-width: 120px; }
+    /* Expected pts */
+    .exp-cell { text-align: center; }
 
-    .prob-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .exp-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #8898BB;
+      line-height: 1;
     }
+
+    .exp-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Probability bar */
+    .prob-cell { min-width: 110px; }
+
+    .prob-row { display: flex; align-items: center; gap: 8px; }
 
     .prob-pct {
       font-family: 'Barlow Condensed', sans-serif;
@@ -305,42 +315,40 @@
       background: linear-gradient(90deg, var(--gold2), var(--gold));
     }
 
-    /* Tier badge */
-    .tier {
-      display: inline-block;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      border-radius: 3px;
-      padding: 2px 8px;
-    }
-
-    .tier-S  { background: rgba(220,38,38,0.2);  color: #EF4444; border: 1px solid rgba(220,38,38,0.3); }
-    .tier-A  { background: rgba(251,191,36,0.12); color: var(--gold2); border: 1px solid rgba(251,191,36,0.25); }
-    .tier-Bp { background: rgba(96,165,250,0.1);  color: #60A5FA; border: 1px solid rgba(96,165,250,0.2); }
-    .tier-B  { background: rgba(107,116,153,0.15); color: var(--muted); border: 1px solid var(--border); }
-    .tier-Bm { background: rgba(107,116,153,0.08); color: #4A5275; border: 1px solid var(--border); }
-
-    /* Notes column */
+    /* Key note */
     .note {
       font-size: 0.8rem;
       color: var(--muted);
-      line-height: 1.4;
-      max-width: 280px;
+      line-height: 1.45;
+      max-width: 260px;
     }
 
     .note strong { color: var(--text); font-weight: 600; }
 
-    /* â”€â”€ NARRATIVES â”€â”€ */
-    .narratives {
-      max-width: 960px;
-      margin: 0 auto 40px;
+    /* ── MOVE INDICATOR ── */
+    .move {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .move-up   { color: #34D399; }
+    .move-down { color: #F87171; }
+    .move-same { color: var(--muted); }
+
+    /* ── EXPLAINER CARDS ── */
+    .cards-section {
+      max-width: 1060px;
+      margin: 32px auto 0;
       padding: 0 16px;
+    }
+
+    .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 12px;
+      margin-top: 14px;
     }
 
     .card {
@@ -350,7 +358,62 @@
       padding: 16px 18px;
     }
 
-    .card-label {
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .card-player {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .card-odds {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .card-teams {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .card p strong { color: var(--text); }
+
+    /* ── SYSTEM EXPLAINER ── */
+    .explainer {
+      max-width: 1060px;
+      margin: 32px auto 0;
+      padding: 0 16px;
+    }
+
+    .explainer-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: 6px;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .exp-block-title {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.68rem;
       font-weight: 700;
@@ -360,38 +423,32 @@
       margin-bottom: 6px;
     }
 
-    .card-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-
-    .card p {
+    .exp-block p {
       font-size: 0.82rem;
       color: var(--muted);
       line-height: 1.5;
     }
 
-    /* â”€â”€ FOOTER â”€â”€ */
+    .exp-block p strong { color: var(--text); }
+
+    /* ── FOOTER ── */
     .footer-bar {
       text-align: center;
-      padding: 0 20px 40px;
+      padding: 32px 20px 40px;
       font-size: 0.78rem;
       color: var(--muted);
       font-family: 'Barlow Condensed', sans-serif;
       letter-spacing: 0.5px;
     }
 
-    /* â”€â”€ RESPONSIVE â”€â”€ */
-    @media (max-width: 600px) {
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
       .note { display: none; }
-      .tag { font-size: 0.65rem; padding: 1px 5px; }
+      .move { display: none; }
+      td { padding: 11px 8px; }
       .player-name { font-size: 1rem; }
       .odds-val { font-size: 1.25rem; }
-      td { padding: 11px 8px; }
+      .tag { font-size: 0.65rem; padding: 1px 5px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -402,125 +459,175 @@
 </head>
 <body>
 
-  <header class="hero">
-    <div class="hero-eyebrow">FIFA World Cup 2026</div>
-    <h1>Sweepstake<br><em>Odds Board</em></h1>
-    <p class="hero-sub">Who wins the sweep? Pre-tournament odds based on team strength &amp; draw quality</p>
-    <div class="hero-badge">
-      <span class="dot"></span>
-      <span>Pre-Tournament Analysis</span>
+<header class="hero">
+  <div class="hero-eyebrow">FIFA World Cup 2026</div>
+  <h1>Sweepstake<br><em>Odds Board</em></h1>
+  <p class="hero-sub">3 pts Win &bull; 1 pt Draw &bull; 0 pts Loss &mdash; all matches, group stage through final</p>
+  <div class="hero-badge"><span class="dot"></span><span>Pre-Tournament Analysis</span></div>
+</header>
+
+<div class="scoring-strip">
+  <div class="key-item"><b>3</b> Win</div>
+  <div class="key-item"><b>1</b> Draw</div>
+  <div class="key-item"><b>0</b> Loss</div>
+  <div class="key-item"><b>~30</b> Max pts (7 wins)</div>
+  <div class="key-item"><b>⭐</b> Anchor team</div>
+</div>
+
+<!-- Scoring system explainer -->
+<div class="explainer" style="margin-top:28px;">
+  <div class="section-title">How The Points Work</div>
+  <div class="explainer-box">
+    <div class="exp-block">
+      <div class="exp-block-title">Group Stage</div>
+      <p>Each team plays <strong>3 matches</strong>. Three wins = <strong>9 pts</strong>. This alone can be decisive — strong draws with multiple solid teams rack up big group totals.</p>
     </div>
-  </header>
-
-  <div class="info-strip">
-    <div class="key-item"><b>6/1</b> Favourite</div>
-    <div class="key-item"><b>33/1</b> Outsider</div>
-    <div class="key-item"><b>â­</b> Anchor = primary team</div>
-    <div class="key-item"><b>%</b> Implied probability</div>
-  </div>
-
-  <section class="table-section">
-    <div class="section-title">Outright Odds â€” Sweepstake Winner</div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="c">#</th>
-            <th>Player</th>
-            <th class="c">Tier</th>
-            <th class="c">Odds</th>
-            <th>Probability</th>
-            <th>Key Note</th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
+    <div class="exp-block">
+      <div class="exp-block-title">Knockout Rounds</div>
+      <p>Every knockout match adds <strong>up to 3 pts</strong> per win or <strong>1 pt</strong> if drawn at 90 mins (goes to pens). The champion plays 7 games — a maximum of <strong>21 pts</strong>.</p>
     </div>
-  </section>
-
-  <div class="table-section" style="margin-top:-16px">
-    <div class="section-title">Key Narratives</div>
+    <div class="exp-block">
+      <div class="exp-block-title">Why Depth Matters</div>
+      <p>Under this system you <strong>don't need the champion</strong> to win the sweep. Three teams each scoring 8–10 pts can beat one champion scoring 18 pts if their support is dead weight.</p>
+    </div>
+    <div class="exp-block">
+      <div class="exp-block-title">The Danger Draw</div>
+      <p>Having <strong>one elite team + three weak teams</strong> is risky. If France wins every game (rare), WAP gets ~17 pts from France + ~3 from the rest. Sly's three solid teams might still outscore that.</p>
+    </div>
   </div>
+</div>
 
-  <div class="narratives" id="narratives"></div>
-
-  <div class="footer-bar">
-    Odds based on FIFA rankings, recent tournament form &amp; 2026 WC qualification projections &bull; All 48 teams assigned &bull; Pre-tournament only
+<!-- Main odds table -->
+<section class="table-section" style="margin-top:28px;">
+  <div class="section-title">Outright Odds — Sweepstake Winner (Revised for 3/1/0 Scoring)</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="c">#</th>
+          <th>Player</th>
+          <th class="c">Tier</th>
+          <th class="c">Odds</th>
+          <th class="c">Exp Pts</th>
+          <th>Probability</th>
+          <th class="c">Move</th>
+          <th>Key Note</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
   </div>
+</section>
+
+<!-- Player cards -->
+<div class="cards-section" style="margin-top:28px; padding-bottom:8px;">
+  <div class="section-title">Full Player Analysis</div>
+  <div class="cards-grid" id="cards"></div>
+</div>
+
+<div class="footer-bar">
+  Scoring: 3 pts Win / 1 pt Draw / 0 pts Loss &bull; Applied to every match from group stage through the final &bull; Expected pts based on FIFA rankings &amp; form &bull; Pre-tournament only
+</div>
 
 <script>
+  const tierClass = { "S": "tier-S", "A": "tier-A", "B+": "tier-Bp", "B": "tier-B", "B-": "tier-Bm" };
+
   const data = [
     {
+      name: "Sly",
+      teams: ["Portugal","Switzerland","Norway","South Africa"],
+      anchors: ["Portugal","Switzerland","Norway"],
+      tier: "A",
+      odds: "5/1",
+      pct: 17,
+      expPts: 30,
+      prevRank: 6,
+      shortNote: "<strong>Best draw under this system.</strong> Three QF-capable teams all accumulate group + KO points. Doesn't need the champion to win.",
+      fullNote: "The standout winner under the 3/1/0 system. <strong>Portugal</strong> should score 13–17 pts going deep into the knockouts. <strong>Switzerland</strong> are a dangerous R16/QF side worth 8–11 pts. <strong>Norway</strong> — built around Haaland — can win their group and push into the last 16 for 7–10 pts. Add those three up and Sly's floor is around 28–30 pts even if Portugal don't win the tournament. <strong>South Africa</strong> are the only dead weight but three productive teams is all you need. This is the most consistent draw in the field."
+    },
+    {
       name: "Sam",
-      teams: ["Spain","Croatia","Egypt","CuraÃ§ao"],
+      teams: ["Spain","Croatia","Egypt","Curaçao"],
       anchors: ["Spain","Croatia"],
       tier: "S",
       odds: "6/1",
-      pct: 14,
-      note: "<strong>Best draw.</strong> Two legitimate contenders. Spain are 2024 Euro champions & WC favourites. Croatia's pedigree (2018 finalists, 2022 3rd) adds real depth."
-    },
-    {
-      name: "WAP",
-      teams: ["France","Australia","Iran","Panama"],
-      anchors: ["France"],
-      tier: "S",
-      odds: "6/1",
-      pct: 13,
-      note: "<strong>France are joint-favourites.</strong> Everything rides on Les Bleus. Australia/Iran/Panama won't contribute much beyond the group stage."
+      pct: 15,
+      expPts: 28,
+      prevRank: 1,
+      shortNote: "<strong>Elite ceiling.</strong> Spain + Croatia both go deep. If Spain wins the tournament, Sam is almost untouchable.",
+      fullNote: "<strong>Spain</strong> are the tournament favourites — 2024 Euro champions, well-drilled, capable of winning every game. A deep Spain run could yield 17–21 pts alone. <strong>Croatia</strong> are serial overachievers (2018 finalists, 2022 bronze) and a realistic QF/SF side worth 10–14 pts. That's a combined 27–35 pts from two teams, which no other draw can match for sheer ceiling. <strong>Egypt</strong> add modest group stage points. <strong>Curaçao</strong> contribute little. Sam's main risk is if both Spain and Croatia exit early — unlikely but the draw is thinner after the top two."
     },
     {
       name: "Bash",
       teams: ["Argentina","Japan","Saudi Arabia","Jordan"],
-      anchors: ["Argentina"],
+      anchors: ["Argentina","Japan"],
       tier: "S",
       odds: "7/1",
-      pct: 12,
-      note: "<strong>Reigning champions.</strong> Argentina are still elite. Japan can sneak a round of 16. Saudi/Jordan add little beyond group stage points."
-    },
-    {
-      name: "Lex",
-      teams: ["Brazil","Austria","Tunisia","Cape Verde"],
-      anchors: ["Brazil"],
-      tier: "A",
-      odds: "8/1",
-      pct: 11,
-      note: "<strong>Brazil's ceiling is as high as anyone's.</strong> Austria & Tunisia can chip in group stage points. Cape Verde are largely dead weight."
+      pct: 13,
+      expPts: 27,
+      prevRank: 3,
+      shortNote: "<strong>Reigning champions + a dangerous Japan side.</strong> Argentina alone can carry this draw. Japan can sneak into the last 16.",
+      fullNote: "<strong>Argentina</strong> are reigning world champions and still elite under Scaloni. A tournament win gives Bash up to 21 pts from one team alone. <strong>Japan</strong> have been genuinely impressive at recent World Cups — capable of a shock upset and a run to the last 16, contributing 7–10 pts. <strong>Saudi Arabia</strong> are unpredictable (they beat Argentina in 2022) and could sneak a group win worth 3–5 pts. <strong>Jordan</strong> are the weak link. The key risk: Argentina underperformed before their 2022 run — if they exit early, Bash's points could collapse fast."
     },
     {
       name: "Hish",
       teams: ["England","Senegal","Paraguay","Qatar"],
       anchors: ["England","Senegal"],
       tier: "A",
-      odds: "9/1",
-      pct: 10,
-      note: "<strong>England are dangerous.</strong> If they click they can go very deep. Senegal as a solid second seed is a genuine asset. Paraguay/Qatar minimal help."
+      odds: "7/1",
+      pct: 12,
+      expPts: 25,
+      prevRank: 5,
+      shortNote: "<strong>England + Senegal is a proper double act.</strong> Both accumulate points through the group stage and into the knockouts. Strong floor.",
+      fullNote: "<strong>England</strong> are a top-8 side with genuine tournament ambition — expected to win their group comfortably (8–9 group pts) and push deep into the knockouts for another 9–12 pts. <strong>Senegal</strong> are one of Africa's best — AFCON contenders with pace and physicality. They should win games in the group and can reach the round of 16, contributing 7–9 pts. <strong>Paraguay</strong> are a scrappy CONMEBOL side who can pinch draws — 2–4 pts likely. <strong>Qatar</strong> were poor hosts in 2022 and won't contribute much. Hish has two genuine points-scorers and rises sharply under this system."
     },
     {
-      name: "Sly",
-      teams: ["Portugal","Switzerland","Norway","South Africa"],
-      anchors: ["Portugal","Switzerland","Norway"],
+      name: "Saad",
+      teams: ["Netherlands","Morocco","Turkey","Iraq"],
+      anchors: ["Netherlands","Morocco"],
       tier: "A",
-      odds: "9/1",
-      pct: 9.5,
-      note: "<strong>Most balanced mid-tier draw.</strong> No WC favourite but three QF-capable teams. Wins if Portugal goes deep AND Switzerland/Norway both clear the group."
+      odds: "8/1",
+      pct: 11,
+      expPts: 25,
+      prevRank: 8,
+      shortNote: "<strong>Two 2022 QF sides in the same hand.</strong> Netherlands and Morocco are both proven at this level. A strong floor with real upside.",
+      fullNote: "<strong>Netherlands</strong> are a genuine dark horse — experienced squad, top-10 side, capable of going to the final. Expect 12–16 pts if they run deep. <strong>Morocco</strong> were the story of 2022, reaching the semi-finals. They're organised, hard to beat, and should win their group — expect 10–14 pts if they reproduce that form. <strong>Turkey</strong> are a competitive side who score goals and can nick results — 4–6 group pts is realistic. <strong>Iraq</strong> add little. The Saad draw has two teams with proven knockout pedigree which is exactly what you want under this scoring system."
     },
     {
       name: "Toff",
       teams: ["Germany","Ecuador","Scotland","DR Congo"],
       anchors: ["Germany"],
       tier: "A",
-      odds: "10/1",
-      pct: 9,
-      note: "<strong>Germany are rebuilding but dangerous.</strong> Ecuador & Scotland can score group stage points. DR Congo are an African wildcard."
+      odds: "9/1",
+      pct: 10,
+      expPts: 24,
+      prevRank: 7,
+      shortNote: "<strong>Germany carry this draw.</strong> Ecuador and Scotland add decent group stage points. A solid all-round portfolio.",
+      fullNote: "<strong>Germany</strong> are rebuilding but remain one of the sport's powerhouses — expected to go deep and accumulate 12–17 pts. <strong>Ecuador</strong> are a physical, well-organised CONMEBOL side who should be competitive in the group — 4–7 pts expected. <strong>Scotland</strong> punch above their weight in qualifiers and can nick results — 3–5 group pts. <strong>DR Congo</strong> are the wild card; African football is unpredictable and they could surprise, though 1–4 pts is the realistic range. Toff has one elite anchor and three teams that all add something — a well-rounded portfolio."
     },
     {
-      name: "Saad",
-      teams: ["Netherlands","Morocco","Turkey","Iraq"],
-      anchors: ["Netherlands","Morocco"],
-      tier: "B+",
-      odds: "11/1",
-      pct: 8,
-      note: "<strong>Solid double-header.</strong> Netherlands are dark horses, Morocco shocked everyone in 2022. Needs both to go deep simultaneously to win the sweep."
+      name: "WAP",
+      teams: ["France","Australia","Iran","Panama"],
+      anchors: ["France"],
+      tier: "S",
+      odds: "10/1",
+      pct: 9,
+      expPts: 22,
+      prevRank: 2,
+      shortNote: "<strong>France are elite but this draw is one-dimensional.</strong> Australia, Iran and Panama contribute almost nothing. Everything rides on Les Bleus.",
+      fullNote: "<strong>France</strong> are among the two or three best sides in the world and can absolutely win this tournament — a perfect run gives 21 pts, a typical deep run gives 15–18 pts. But here's the problem: <strong>Australia</strong> are a round-of-16 side at best (3–5 pts), <strong>Iran</strong> are a hard-working Asian team who struggle in the group stage (2–4 pts), and <strong>Panama</strong> are genuine minnows who could finish bottom of their group (0–3 pts). That's a combined support total of ~5–12 pts. Under a knockout-bonus system WAP was elite. Under 3/1/0 across the whole tournament, that dead weight costs real points relative to draws with multiple solid teams."
+    },
+    {
+      name: "Lex",
+      teams: ["Brazil","Austria","Tunisia","Cape Verde"],
+      anchors: ["Brazil"],
+      tier: "S",
+      odds: "10/1",
+      pct: 9,
+      expPts: 22,
+      prevRank: 4,
+      shortNote: "<strong>Brazil are top-5 in the world but carry this draw alone.</strong> Austria and Tunisia add modest group points. Cape Verde contribute very little.",
+      fullNote: "<strong>Brazil</strong> are one of the genuine favourites and have the talent to win the whole thing — a strong tournament could yield 15–20 pts. <strong>Austria</strong> are a decent European side who should be competitive in the group — expect 4–6 pts. <strong>Tunisia</strong> are a regular World Cup presence but tend to battle rather than dominate — 3–5 pts. <strong>Cape Verde</strong> are the weakest team in the draw — 1–3 pts if things go well. The same structural problem as WAP: three of Lex's four teams will likely only contribute group stage points, leaving Brazil to carry almost the entire score. Strong if Brazil peak, exposed if they don't."
     },
     {
       name: "Naj",
@@ -528,57 +635,74 @@
       anchors: ["Belgium"],
       tier: "B",
       odds: "18/1",
-      pct: 5,
-      note: "<strong>Belgium's golden generation is fading.</strong> De Bruyne is ageing, squad depth is thin. Ivory Coast & Sweden earn group points but won't go far."
+      pct: 6,
+      expPts: 21,
+      prevRank: 9,
+      shortNote: "<strong>Belgium's golden generation is fading.</strong> Ivory Coast and Sweden add modest group points. New Zealand are a near-certain group exit.",
+      fullNote: "<strong>Belgium</strong> have been ranked #1 in the world but that squad is ageing — De Bruyne approaching the twilight, Lukaku relying on moments of brilliance. They remain a dangerous side capable of 10–14 pts if they rediscover their best. <strong>Ivory Coast</strong> are always competitive in Africa and can be physical in the group — 4–6 pts. <strong>Sweden</strong> are a functional European side who will fight for every point — 3–5 pts. <strong>New Zealand</strong> are the weakest link and typically struggle in the group stage (1–2 pts). Naj's draw isn't bad but relies heavily on Belgium clicking at exactly the right time."
     },
     {
       name: "QC",
       teams: ["Colombia","Canada","Algeria","Ghana"],
       anchors: ["Colombia","Canada"],
       tier: "B",
-      odds: "25/1",
-      pct: 4,
-      note: "<strong>Colombia are underrated.</strong> Canada as hosts could surprise. Neither is a realistic WC winner without a run of major upsets."
+      odds: "14/1",
+      pct: 7,
+      expPts: 22,
+      prevRank: 10,
+      shortNote: "<strong>Colombia + Canada is a underrated double.</strong> Both score group points reliably. No elite ceiling but a solid consistent floor.",
+      fullNote: "<strong>Colombia</strong> are a top-12 side — technically gifted, well-organised under their current setup. They should win their group and push into the knockouts, contributing 9–13 pts. <strong>Canada</strong> as co-hosts will have home support and a motivated squad — they can be dangerous in the group and could push to the last 16 for 7–10 pts. <strong>Algeria</strong> are a solid African side who score goals — 4–6 group pts. <strong>Ghana</strong> are inconsistent but passionate — 3–5 group pts. QC actually rises under this system because both primary teams accumulate real points across multiple games rather than relying on one team going all the way."
     },
     {
       name: "KB",
       teams: ["Uruguay","USA","Bosnia-Herzegovina","Uzbekistan"],
       anchors: ["Uruguay","USA"],
       tier: "B",
-      odds: "25/1",
-      pct: 4,
-      note: "<strong>Uruguay punch above their weight</strong> but lack elite ceiling. USA as hosts will be raucous and can make the knockouts. Bosnia/Uzbekistan are dead weight."
+      odds: "20/1",
+      pct: 5,
+      expPts: 20,
+      prevRank: 11,
+      shortNote: "<strong>Uruguay and USA both score points reliably but lack elite ceiling.</strong> Bosnia can contribute in the group. Uzbekistan are the weak link.",
+      fullNote: "<strong>Uruguay</strong> are serial overachievers — always competitive, always hard to beat. Expect 8–11 pts from a side that should reach the knockouts. <strong>USA</strong> as co-hosts will be fired up and can reach the last 16 — home advantage counts for a lot in group stage momentum — contributing 7–10 pts. <strong>Bosnia-Herzegovina</strong> have genuine quality and can be dangerous in the group stage — 4–6 pts. <strong>Uzbekistan</strong> are the only near-certain group stage exit in this draw — 1–3 pts. KB's portfolio lacks a superstar team but has genuine depth — three of the four teams will contribute meaningful points."
     },
     {
       name: "Foo",
       teams: ["Mexico","South Korea","Czechia","Haiti"],
       anchors: ["Mexico","South Korea"],
       tier: "B-",
-      odds: "33/1",
-      pct: 3,
-      note: "<strong>Weakest draw.</strong> Mexico historically stall at the round of 16. South Korea need everything to go right. Czechia modest. Haiti are a group-stage exit."
+      odds: "25/1",
+      pct: 4,
+      expPts: 19,
+      prevRank: 12,
+      shortNote: "<strong>Toughest draw in the field.</strong> Mexico and South Korea are decent but historically underperform. Czechia chip in. Haiti contribute very little.",
+      fullNote: "<strong>Mexico</strong> are a perennial World Cup presence but have a painful habit of crashing out in the round of 16 — or now the round of 32 with the expanded format. Expect 8–11 pts but rarely more. <strong>South Korea</strong> are an improved side with quality in midfield and attack — they should be competitive in the group and could spring a shock, contributing 7–10 pts. <strong>Czechia</strong> are a solid European team who keep things tight — 4–6 group pts. <strong>Haiti</strong> are the clear weakest link in the entire draw — they're likely to struggle in the group stage and 0–3 pts would be a good return. No team in Foo's hand has a realistic path to the final, making this the hardest draw to win from."
     },
   ];
 
-  const tierClass = { "S": "tier-S", "A": "tier-A", "B+": "tier-Bp", "B": "tier-B", "B-": "tier-Bm" };
-  const maxPct = 14;
+  const maxPct = 17;
 
+  // Build table
   const tbody = document.getElementById("tbody");
-
   data.forEach((p, i) => {
     const pos = i + 1;
     const rankClass = pos <= 3 ? `rank-${pos}` : "";
 
     let badge;
-    if (pos === 1) badge = `<span class="medal medal-1">1</span>`;
+    if (pos === 1)      badge = `<span class="medal medal-1">1</span>`;
     else if (pos === 2) badge = `<span class="medal medal-2">2</span>`;
     else if (pos === 3) badge = `<span class="medal medal-3">3</span>`;
-    else badge = `<span class="medal-n">${pos}</span>`;
+    else                badge = `<span class="medal-n">${pos}</span>`;
 
     const tags = p.teams.map(t => {
-      const isAnchor = p.anchors.includes(t);
-      return `<span class="tag${isAnchor ? ' anchor' : ''}">${isAnchor ? 'â­ ' : ''}${t}</span>`;
+      const a = p.anchors.includes(t);
+      return `<span class="tag${a ? ' anchor' : ''}">${a ? '⭐ ' : ''}${t}</span>`;
     }).join("");
+
+    const diff = p.prevRank - pos;
+    let moveHtml;
+    if (diff > 0)      moveHtml = `<span class="move move-up">▲ ${diff}</span>`;
+    else if (diff < 0) moveHtml = `<span class="move move-down">▼ ${Math.abs(diff)}</span>`;
+    else               moveHtml = `<span class="move move-same">—</span>`;
 
     const barW = ((p.pct / maxPct) * 100).toFixed(1);
 
@@ -594,57 +718,41 @@
           <div class="odds-val">${p.odds}</div>
           <div class="odds-label">odds</div>
         </td>
+        <td class="exp-cell">
+          <div class="exp-val">~${p.expPts}</div>
+          <div class="exp-label">exp pts</div>
+        </td>
         <td class="prob-cell">
           <div class="prob-row">
             <span class="prob-pct">${p.pct}%</span>
             <div class="bar-track"><div class="bar-fill" style="width:${barW}%"></div></div>
           </div>
         </td>
-        <td class="note">${p.note}</td>
+        <td class="c">${moveHtml}</td>
+        <td class="note">${p.shortNote}</td>
       </tr>`;
   });
 
-  // Narrative cards
-  const narratives = [
-    {
-      label: "Value Pick",
-      title: "Sam â€” The Best Draw",
-      body: "Two legitimate semi-final contenders in the same hand is rare. Spain as tournament favourites plus Croatia (2018 finalists, 2022 3rd) gives the best floor and ceiling of anyone in the sweep."
-    },
-    {
-      label: "Giant Clash",
-      title: "WAP vs Bash vs Lex",
-      body: "Pure coin flip on which giant goes deepest. France, Argentina, and Brazil are all ~13% WC winners individually. Whoever drew the one that lifts the trophy will win the sweep â€” full stop."
-    },
-    {
-      label: "Dark Horse",
-      title: "Sly â€” The Accumulator",
-      body: "The only player without one elite team who compensates with three solid teams. If there's a chaotic knockout stage with upsets, Sly quietly racks up points across the board."
-    },
-    {
-      label: "Sympathy Pick",
-      title: "Foo â€” Tough Draw",
-      body: "Mexico, South Korea, Czechia, and Haiti is rough. Mexico have underperformed for a decade, and the other three are unlikely to trouble the back end of the tournament."
-    },
-    {
-      label: "Sleeper",
-      title: "Saad â€” Morocco Effect",
-      body: "Morocco were 2022's biggest story. If they run it back, combined with a deep Netherlands run, Saad has a genuine shot. Both peaking simultaneously is the dream scenario."
-    },
-    {
-      label: "Fading Glory",
-      title: "Naj â€” Belgium's Last Dance?",
-      body: "Belgium's golden generation is on borrowed time. If De Bruyne and Lukaku find one last gear, Naj could surprise. But this squad isn't what it was in 2018."
-    },
-  ];
+  // Build player cards
+  const cards = document.getElementById("cards");
+  data.forEach((p, i) => {
+    const pos = i + 1;
+    const tags = p.teams.map(t => {
+      const a = p.anchors.includes(t);
+      return `<span class="tag${a ? ' anchor' : ''}">${a ? '⭐ ' : ''}${t}</span>`;
+    }).join("");
 
-  const narrativesEl = document.getElementById("narratives");
-  narratives.forEach(n => {
-    narrativesEl.innerHTML += `
+    cards.innerHTML += `
       <div class="card">
-        <div class="card-label">${n.label}</div>
-        <div class="card-title">${n.title}</div>
-        <p>${n.body}</p>
+        <div class="card-top">
+          <div>
+            <span class="medal-n" style="font-size:0.75rem;color:var(--muted);">#${pos}</span>
+            <span class="card-player" style="margin-left:6px;">${p.name}</span>
+          </div>
+          <span class="card-odds">${p.odds}</span>
+        </div>
+        <div class="card-teams">${tags}</div>
+        <p>${p.fullNote}</p>
       </div>`;
   });
 </script>
