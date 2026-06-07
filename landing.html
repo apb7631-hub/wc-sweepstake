@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WC2026 Sweepstake — Run Your Own</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #DC2626; --red2: #EF4444;
+      --gold: #FBBF24; --gold2: #F59E0B;
+      --green: #22C55E;
+      --bg: #0C0E14; --bg2: #13161F; --bg3: #1A1E2E;
+      --border: #252A3A; --text: #F0F4FF; --muted: #6B7499;
+    }
+    body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* NAV */
+    nav {
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #fff; text-decoration: none; }
+    .nav-logo em { font-style: normal; color: var(--gold); }
+    .nav-links { display: flex; gap: 10px; align-items: center; }
+    .btn-nav { font-family: 'Barlow Condensed', sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 7px 16px; border-radius: 4px; cursor: pointer; text-decoration: none; border: none; }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+    .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
+    .btn-primary { background: var(--red); color: #fff; }
+    .btn-primary:hover { background: var(--red2); }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #0C0E14 0%, #1a0808 50%, #0C0E14 100%);
+      border-bottom: 3px solid var(--red);
+      padding: 80px 20px 70px; text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 80% at 50% -10%, rgba(220,38,38,0.22) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 90% 110%, rgba(251,191,36,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+    .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2.8rem, 10vw, 5.5rem); font-weight: 800; text-transform: uppercase; line-height: 0.92; color: #fff; letter-spacing: -1px; margin-bottom: 20px; }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+    .hero-sub { font-size: 1.05rem; color: var(--muted); max-width: 480px; margin: 0 auto 32px; line-height: 1.6; }
+    .hero-cta { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .btn-big {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--red); color: #fff; border: none; border-radius: 6px;
+      padding: 16px 36px; font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+      cursor: pointer; text-decoration: none; transition: background 0.15s, transform 0.1s;
+    }
+    .btn-big:hover { background: var(--red2); transform: translateY(-1px); }
+    .btn-big .price { background: rgba(0,0,0,0.2); border-radius: 3px; padding: 2px 10px; font-size: 1rem; }
+    .hero-note { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; color: var(--muted); letter-spacing: 0.5px; }
+    .hero-note a { color: var(--gold); text-decoration: none; }
+    .hero-note a:hover { text-decoration: underline; }
+
+    /* JOIN STRIP */
+    .join-strip {
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      padding: 14px 20px; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
+    }
+    .join-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+    .join-form { display: flex; gap: 8px; }
+    .join-input {
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 4px;
+      padding: 8px 14px; font-family: 'Barlow Condensed', sans-serif; font-size: 1rem;
+      font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text);
+      outline: none; width: 130px; text-align: center;
+    }
+    .join-input:focus { border-color: var(--gold); }
+    .join-input::placeholder { letter-spacing: 2px; font-size: 0.8rem; color: var(--muted); text-transform: uppercase; }
+    .btn-join { background: var(--gold); color: #0C0E14; border: none; border-radius: 4px; padding: 8px 18px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
+    .btn-join:hover { background: var(--gold2); }
+
+    /* FEATURES */
+    .section { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+    .section-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .section h2 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 40px; line-height: 1; }
+
+    .features { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+    .feature { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 22px 20px; }
+    .feature-icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .feature-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #fff; margin-bottom: 6px; }
+    .feature p { font-size: 0.83rem; color: var(--muted); line-height: 1.55; }
+
+    /* HOW IT WORKS */
+    .how { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0; }
+    .step { padding: 32px 24px; border-right: 1px solid var(--border); position: relative; }
+    .step:last-child { border-right: none; }
+    .step-num { font-family: 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 800; color: var(--red); opacity: 0.3; line-height: 1; margin-bottom: 8px; }
+    .step-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 6px; }
+    .step p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+    /* PRICING */
+    .pricing-box {
+      background: var(--bg2); border: 1px solid var(--border); border-top: 3px solid var(--gold);
+      border-radius: 8px; padding: 40px; text-align: center; max-width: 420px; margin: 0 auto;
+    }
+    .price-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 4rem; font-weight: 800; color: var(--gold); line-height: 1; }
+    .price-tag sup { font-size: 1.5rem; vertical-align: super; }
+    .price-desc { font-size: 0.85rem; color: var(--muted); margin: 8px 0 24px; }
+    .price-includes { list-style: none; text-align: left; margin-bottom: 28px; display: flex; flex-direction: column; gap: 8px; }
+    .price-includes li { font-size: 0.85rem; color: var(--text); display: flex; align-items: center; gap: 8px; }
+    .price-includes li::before { content: '✓'; color: var(--green); font-weight: 700; font-size: 0.9rem; }
+
+    /* FOOTER */
+    footer { text-align: center; padding: 28px 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.5px; color: var(--muted); border-top: 1px solid var(--border); }
+
+    @media (max-width: 600px) {
+      .step { border-right: none; border-bottom: 1px solid var(--border); }
+      .step:last-child { border-bottom: none; }
+      nav .btn-nav:not(.btn-primary) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="landing.html" class="nav-logo">WC<em>2026</em> Sweep</a>
+  <div class="nav-links">
+    <a href="setup.html" class="btn-nav btn-ghost">Already paid?</a>
+    <a href="#join" class="btn-nav btn-primary">Join a Group</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">FIFA World Cup 2026 &bull; USA &bull; Canada &bull; Mexico</div>
+  <h1>Run Your Own<br><em>Sweepstake</em></h1>
+  <p class="hero-sub">48 teams. 12 players. One winner. Set up your group in minutes, share the link with your mates, and watch the live table update in real time.</p>
+  <div class="hero-cta">
+    <a href="#" id="pay-btn" class="btn-big">
+      Create Your Sweep <span class="price">£1.99</span>
+    </a>
+    <div class="hero-note">
+      One-off payment &bull; Instant setup &bull;
+      <a href="setup.html">Already paid? Set up here →</a>
+    </div>
+  </div>
+</section>
+
+<div class="join-strip" id="join">
+  <div class="join-label">Have a group code?</div>
+  <div class="join-form">
+    <input type="text" id="code-input" class="join-input" placeholder="ABC123" maxlength="6" />
+    <button class="btn-join" onclick="joinGroup()">Join →</button>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-eyebrow">What you get</div>
+  <h2>Everything you need</h2>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">🎲</div>
+      <div class="feature-title">Instant Random Draw</div>
+      <p>All 48 World Cup teams automatically shuffled and assigned — 4 teams per player, completely fair.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Live League Table</div>
+      <p>Points update in real time as results come in. Everyone in your group sees the same live standings.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔐</div>
+      <div class="feature-title">Admin Panel</div>
+      <p>Password-protected results entry. Only you can log wins, draws, and losses — no one can tamper.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔗</div>
+      <div class="feature-title">Shareable Link</div>
+      <p>One link for your mates to bookmark. No accounts, no downloads — just open and check the table.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📱</div>
+      <div class="feature-title">Works on Any Device</div>
+      <p>Mobile, tablet, desktop. Add to your home screen for quick access during matchdays.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Up to 12 Players</div>
+      <p>Perfect for friend groups, offices, or WhatsApp chats. Covers the full 48-team tournament.</p>
+    </div>
+  </div>
+</section>
+
+<div class="how">
+  <div class="section" style="padding-bottom:0">
+    <div class="section-eyebrow">How it works</div>
+    <h2>Ready in 3 minutes</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Pay once</div>
+      <p>£1.99 one-off. No subscription, no hidden fees. Covers the full tournament from group stage to the final.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Set up your group</div>
+      <p>Name your sweep, add your players, hit Draw — teams are assigned randomly and fairly in seconds.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Share the link</div>
+      <p>Send your group a 6-character code or a direct link. They open it, see their teams and the live table.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Log results</div>
+      <p>After each match, open the admin panel and tap W, D, or L. The table updates instantly for everyone.</p>
+    </div>
+  </div>
+</div>
+
+<section class="section" style="padding-top:60px">
+  <div class="section-eyebrow">Pricing</div>
+  <h2 style="text-align:center;margin-bottom:32px;">Simple &amp; Fair</h2>
+  <div class="pricing-box">
+    <div class="price-tag"><sup>£</sup>1.99</div>
+    <p class="price-desc">One-off payment &bull; Full tournament access</p>
+    <ul class="price-includes">
+      <li>Random draw for up to 12 players</li>
+      <li>All 48 World Cup teams included</li>
+      <li>Live real-time league table</li>
+      <li>Password-protected admin panel</li>
+      <li>Shareable group link &amp; code</li>
+      <li>Works on mobile, tablet &amp; desktop</li>
+      <li>Covers group stage through to the final</li>
+    </ul>
+    <a href="#" id="pay-btn-2" class="btn-big" style="width:100%;justify-content:center;">
+      Create Your Sweep <span class="price">£1.99</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  FIFA World Cup 2026 Sweepstake &bull; For entertainment purposes &bull;
+  <a href="table.html" style="color:var(--muted);">View a table</a>
+</footer>
+
+<script src="config.js"></script>
+<script>
+  document.getElementById('pay-btn').href   = PAYMENT_LINK;
+  document.getElementById('pay-btn-2').href = PAYMENT_LINK;
+
+  // Capitalise code input
+  document.getElementById('code-input').addEventListener('input', function() {
+    this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  });
+
+  function joinGroup() {
+    const code = document.getElementById('code-input').value.trim().toUpperCase();
+    if (code.length < 4) { alert('Please enter your group code'); return; }
+    window.location.href = `table.html?code=${code}`;
+  }
+
+  document.getElementById('code-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') joinGroup();
+  });
+</script>
+</body>
+</html>
