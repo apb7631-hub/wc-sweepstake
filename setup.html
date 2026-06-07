@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Set Up Your Sweep — WC2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #DC2626; --red2: #EF4444;
+      --gold: #FBBF24; --gold2: #F59E0B;
+      --green: #22C55E; --green2: #16A34A;
+      --bg: #0C0E14; --bg2: #13161F; --bg3: #1A1E2E;
+      --border: #252A3A; --text: #F0F4FF; --muted: #6B7499;
+    }
+    body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    .hero {
+      background: linear-gradient(135deg, #0C0E14 0%, #1a0a0a 50%, #0C0E14 100%);
+      border-bottom: 3px solid var(--red); padding: 32px 20px 24px; text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% -20%, rgba(220,38,38,0.15) 0%, transparent 70%); pointer-events: none; }
+    .hero-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+    .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2rem, 7vw, 3.2rem); font-weight: 800; text-transform: uppercase; color: #fff; line-height: 1; }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+
+    /* PROGRESS */
+    .progress-bar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 14px 20px; display: flex; justify-content: center; gap: 0; }
+    .prog-step { display: flex; align-items: center; gap: 8px; }
+    .prog-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 0.82rem; border: 2px solid var(--border); color: var(--muted); background: var(--bg3); transition: all 0.2s; }
+    .prog-dot.active { border-color: var(--red); color: #fff; background: var(--red); }
+    .prog-dot.done { border-color: var(--green); color: var(--green); background: rgba(34,197,94,0.1); }
+    .prog-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+    .prog-label.active { color: var(--text); }
+    .prog-line { width: 32px; height: 2px; background: var(--border); margin: 0 6px; }
+    .prog-line.done { background: var(--green); }
+
+    /* CONTENT */
+    .content { max-width: 680px; margin: 36px auto; padding: 0 16px 60px; }
+
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
+
+    .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 28px 24px; margin-bottom: 16px; }
+
+    .card-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 18px; border-left: 3px solid var(--red); padding-left: 10px; }
+
+    label { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+
+    input[type="text"], input[type="password"] {
+      width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 5px;
+      padding: 11px 14px; font-family: 'Barlow', sans-serif; font-size: 0.95rem; color: var(--text);
+      outline: none; transition: border-color 0.15s; margin-bottom: 16px;
+    }
+    input:focus { border-color: var(--red); }
+    input.error { border-color: var(--red2); }
+
+    .input-hint { font-size: 0.75rem; color: var(--muted); margin-top: -12px; margin-bottom: 16px; }
+
+    /* PLAYERS LIST */
+    .players-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .player-row { display: flex; gap: 8px; align-items: center; }
+    .player-row input { margin-bottom: 0; flex: 1; }
+    .btn-remove { background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; cursor: pointer; line-height: 1; flex-shrink: 0; }
+    .btn-remove:hover { border-color: var(--red2); color: var(--red2); }
+    .btn-add { background: transparent; border: 1px dashed var(--border); color: var(--muted); border-radius: 5px; padding: 10px; width: 100%; font-family: 'Barlow Condensed', sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
+    .btn-add:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* DRAW RESULTS */
+    .draw-grid { display: flex; flex-direction: column; gap: 10px; }
+    .draw-player { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; }
+    .draw-player-name { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 6px; }
+    .draw-teams { display: flex; flex-wrap: wrap; gap: 5px; }
+    .draw-tag { font-size: 0.72rem; font-weight: 500; color: var(--gold2); background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); border-radius: 3px; padding: 3px 9px; }
+
+    /* SUCCESS */
+    .success-box { text-align: center; padding: 32px 20px; }
+    .success-icon { font-size: 3rem; margin-bottom: 16px; }
+    .success-title { font-family: 'Barlow Condensed', sans-serif; font-size: 2rem; font-weight: 800; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+    .success-sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 28px; }
+    .code-display { font-family: 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 800; letter-spacing: 10px; color: var(--gold); background: var(--bg3); border: 2px solid var(--gold); border-radius: 8px; padding: 16px 28px; display: inline-block; margin-bottom: 20px; }
+    .share-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .share-link { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .share-url { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .btn-copy { background: var(--bg2); border: 1px solid var(--border); color: var(--muted); border-radius: 4px; padding: 5px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+    .btn-copy:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-copy.copied { border-color: var(--green); color: var(--green); }
+
+    /* BUTTONS */
+    .btn-next { width: 100%; background: var(--red); color: #fff; border: none; border-radius: 6px; padding: 14px; font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: background 0.15s; margin-top: 8px; }
+    .btn-next:hover { background: var(--red2); }
+    .btn-next:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-gold { background: var(--gold); color: #0C0E14; }
+    .btn-gold:hover { background: var(--gold2); }
+    .btn-back { background: transparent; border: 1px solid var(--border); color: var(--muted); width: 100%; border-radius: 6px; padding: 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; margin-top: 8px; }
+    .btn-back:hover { border-color: var(--muted); color: var(--text); }
+
+    .error-msg { font-size: 0.78rem; color: var(--red2); margin-top: 8px; min-height: 18px; }
+
+    /* LOADING */
+    .spinner { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-eyebrow">FIFA World Cup 2026</div>
+  <h1>Set Up Your <em>Sweep</em></h1>
+</header>
+
+<div class="progress-bar" id="progress-bar">
+  <div class="prog-step">
+    <div class="prog-dot active" id="dot-1">1</div>
+    <div class="prog-label active" id="lbl-1">Group</div>
+  </div>
+  <div class="prog-line" id="line-1"></div>
+  <div class="prog-step">
+    <div class="prog-dot" id="dot-2">2</div>
+    <div class="prog-label" id="lbl-2">Players</div>
+  </div>
+  <div class="prog-line" id="line-2"></div>
+  <div class="prog-step">
+    <div class="prog-dot" id="dot-3">3</div>
+    <div class="prog-label" id="lbl-3">Draw</div>
+  </div>
+  <div class="prog-line" id="line-3"></div>
+  <div class="prog-step">
+    <div class="prog-dot" id="dot-4">4</div>
+    <div class="prog-label" id="lbl-4">Done!</div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- STEP 1: Group Info -->
+  <div class="step-panel active" id="step-1">
+    <div class="card">
+      <div class="card-title">Name Your Sweepstake</div>
+      <label for="group-name">Group Name</label>
+      <input type="text" id="group-name" placeholder="e.g. The Lads WC2026" maxlength="40" />
+      <label for="admin-pw">Admin Password</label>
+      <input type="password" id="admin-pw" placeholder="Choose a password" />
+      <div class="input-hint">You'll use this to log match results. Keep it to yourself.</div>
+      <label for="admin-pw2">Confirm Password</label>
+      <input type="password" id="admin-pw2" placeholder="Repeat password" />
+    </div>
+    <div class="error-msg" id="err-1"></div>
+    <button class="btn-next" onclick="nextStep(1)">Next: Add Players →</button>
+  </div>
+
+  <!-- STEP 2: Players -->
+  <div class="step-panel" id="step-2">
+    <div class="card">
+      <div class="card-title">Add Your Players <span style="color:var(--muted);font-size:0.75rem;">(2–12)</span></div>
+      <div class="players-list" id="players-list"></div>
+      <button class="btn-add" id="add-player-btn" onclick="addPlayerRow()">+ Add Player</button>
+    </div>
+    <div class="error-msg" id="err-2"></div>
+    <button class="btn-next" onclick="nextStep(2)">Next: Do The Draw →</button>
+    <button class="btn-back" onclick="goBack(1)">← Back</button>
+  </div>
+
+  <!-- STEP 3: Draw -->
+  <div class="step-panel" id="step-3">
+    <div class="card">
+      <div class="card-title">The Draw</div>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:20px;">All 48 World Cup teams have been randomly shuffled and assigned. Each player gets 4 teams.</p>
+      <div class="draw-grid" id="draw-grid"></div>
+    </div>
+    <div class="error-msg" id="err-3"></div>
+    <button class="btn-next btn-gold" onclick="redraw()" style="margin-bottom:8px;">🔀 Redraw</button>
+    <button class="btn-next" id="confirm-btn" onclick="createGroup()">✓ Confirm &amp; Create Group</button>
+    <button class="btn-back" onclick="goBack(2)">← Back</button>
+  </div>
+
+  <!-- STEP 4: Success -->
+  <div class="step-panel" id="step-4">
+    <div class="card">
+      <div class="success-box">
+        <div class="success-icon">🏆</div>
+        <div class="success-title">You're All Set!</div>
+        <p class="success-sub">Share this code with your players so they can view the live table:</p>
+        <div class="code-display" id="final-code">------</div>
+        <p style="font-size:0.8rem;color:var(--muted);margin-bottom:20px;">Or share one of these links directly:</p>
+        <div class="share-links">
+          <div class="share-link">
+            <span class="prog-label">Live Table</span>
+            <span class="share-url" id="table-url"></span>
+            <button class="btn-copy" onclick="copyUrl('table-url', this)">Copy</button>
+          </div>
+          <div class="share-link">
+            <span class="prog-label">Admin Panel</span>
+            <span class="share-url" id="admin-url"></span>
+            <button class="btn-copy" onclick="copyUrl('admin-url', this)">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a id="go-table-btn" href="#" class="btn-next" style="display:block;text-align:center;text-decoration:none;padding:14px;">View Live Table →</a>
+    <a id="go-admin-btn" href="#" class="btn-next btn-gold" style="display:block;text-align:center;text-decoration:none;padding:14px;margin-top:8px;">Open Admin Panel →</a>
+  </div>
+
+</div>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const sb = initSupabase();
+  let currentDraw = [];
+  let playerNames = [];
+
+  // ── INIT: pre-populate 4 player rows ──
+  window.addEventListener('DOMContentLoaded', () => {
+    for (let i = 0; i < 4; i++) addPlayerRow();
+  });
+
+  // ── PLAYER ROWS ──
+  function addPlayerRow() {
+    const list = document.getElementById('players-list');
+    if (list.children.length >= 12) return;
+    const idx = list.children.length + 1;
+    const row = document.createElement('div');
+    row.className = 'player-row';
+    row.innerHTML = `
+      <input type="text" placeholder="Player ${idx} name" maxlength="20" />
+      <button class="btn-remove" onclick="removePlayerRow(this)">✕</button>`;
+    list.appendChild(row);
+    updateAddBtn();
+  }
+
+  function removePlayerRow(btn) {
+    const list = document.getElementById('players-list');
+    if (list.children.length <= 2) return;
+    btn.closest('.player-row').remove();
+    updateAddBtn();
+  }
+
+  function updateAddBtn() {
+    const list = document.getElementById('players-list');
+    document.getElementById('add-player-btn').style.display = list.children.length >= 12 ? 'none' : 'block';
+  }
+
+  // ── PROGRESS ──
+  function setProgress(step) {
+    for (let i = 1; i <= 4; i++) {
+      const dot = document.getElementById(`dot-${i}`);
+      const lbl = document.getElementById(`lbl-${i}`);
+      dot.className = 'prog-dot' + (i < step ? ' done' : i === step ? ' active' : '');
+      dot.textContent = i < step ? '✓' : i;
+      lbl.className = 'prog-label' + (i === step ? ' active' : '');
+    }
+    for (let i = 1; i <= 3; i++) {
+      document.getElementById(`line-${i}`).className = 'prog-line' + (i < step ? ' done' : '');
+    }
+  }
+
+  function goBack(step) {
+    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(`step-${step}`).classList.add('active');
+    setProgress(step);
+    window.scrollTo(0, 0);
+  }
+
+  // ── VALIDATION + STEPS ──
+  function nextStep(from) {
+    document.getElementById(`err-${from}`).textContent = '';
+
+    if (from === 1) {
+      const name = document.getElementById('group-name').value.trim();
+      const pw   = document.getElementById('admin-pw').value;
+      const pw2  = document.getElementById('admin-pw2').value;
+      if (!name)           { showErr(1, 'Please enter a group name'); return; }
+      if (pw.length < 4)   { showErr(1, 'Password must be at least 4 characters'); return; }
+      if (pw !== pw2)      { showErr(1, 'Passwords do not match'); return; }
+      goStep(2);
+    }
+
+    if (from === 2) {
+      const rows = document.querySelectorAll('#players-list .player-row input');
+      playerNames = [...rows].map(r => r.value.trim()).filter(Boolean);
+      if (playerNames.length < 2)  { showErr(2, 'Add at least 2 players'); return; }
+      if (new Set(playerNames).size !== playerNames.length) { showErr(2, 'Player names must be unique'); return; }
+      generateDraw();
+      goStep(3);
+    }
+  }
+
+  function goStep(n) {
+    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(`step-${n}`).classList.add('active');
+    setProgress(n);
+    window.scrollTo(0, 0);
+  }
+
+  function showErr(step, msg) {
+    document.getElementById(`err-${step}`).textContent = msg;
+  }
+
+  // ── DRAW ──
+  function generateDraw() {
+    const teams = shuffle(ALL_TEAMS);
+    currentDraw = playerNames.map((name, i) => ({
+      name,
+      teams: teams.slice(i * 4, i * 4 + 4)
+    }));
+    renderDraw();
+  }
+
+  function redraw() { generateDraw(); }
+
+  function renderDraw() {
+    const grid = document.getElementById('draw-grid');
+    grid.innerHTML = '';
+    currentDraw.forEach(p => {
+      const el = document.createElement('div');
+      el.className = 'draw-player';
+      el.innerHTML = `
+        <div class="draw-player-name">${p.name}</div>
+        <div class="draw-teams">${p.teams.map(t => `<span class="draw-tag">${t}</span>`).join('')}</div>`;
+      grid.appendChild(el);
+    });
+  }
+
+  // ── CREATE GROUP ──
+  async function createGroup() {
+    const btn = document.getElementById('confirm-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Creating group...';
+    document.getElementById('err-3').textContent = '';
+
+    try {
+      const code = generateCode();
+      const name = document.getElementById('group-name').value.trim();
+      const pw   = document.getElementById('admin-pw').value;
+
+      // Insert group
+      const { data: grp, error: grpErr } = await sb.from('groups').insert({ code, name, admin_password: pw }).select().single();
+      if (grpErr) throw grpErr;
+
+      // Insert players
+      const playerRows = currentDraw.map(p => ({ group_id: grp.id, name: p.name, teams: p.teams }));
+      const { error: playErr } = await sb.from('players').insert(playerRows);
+      if (playErr) throw playErr;
+
+      // Show success
+      const base = window.location.origin + window.location.pathname.replace('setup.html', '');
+      document.getElementById('final-code').textContent = code;
+      document.getElementById('table-url').textContent  = `${base}table.html?code=${code}`;
+      document.getElementById('admin-url').textContent  = `${base}admin.html?code=${code}`;
+      document.getElementById('go-table-btn').href = `table.html?code=${code}`;
+      document.getElementById('go-admin-btn').href = `admin.html?code=${code}`;
+      goStep(4);
+
+    } catch (e) {
+      document.getElementById('err-3').textContent = 'Something went wrong: ' + e.message;
+      btn.disabled = false;
+      btn.textContent = '✓ Confirm & Create Group';
+    }
+  }
+
+  // ── COPY ──
+  function copyUrl(elId, btn) {
+    const text = document.getElementById(elId).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
