@@ -1,7 +1,7 @@
 const SUPABASE_URL  = 'https://kvnrrdlvhdrrpogvfanq.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2bnJyZGx2aGRycnBvZ3ZmYW5xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NDIwNzAsImV4cCI6MjA5NjQxODA3MH0.Z-yhcb4s2lW0S8MkDYqncmi_-NT6SkugH1lP7jRtOYg';
 const STRIPE_PK     = 'pk_test_51TfkHI1QLPCiZRc2MMLVFkVSaOKsw2qP21GNo87K93BA3k28dXT1fHfLLcgM01OB1pc3OEDoMaZ9Z3MjK1mAhk7p00ugQcZc4G';
-const PAYMENT_LINK  = 'https://buy.stripe.com/test_dRm3cn7s9dXf9r252P7Re01';
+const PAYMENT_LINK  = 'https://buy.stripe.com/5kQ14f9u322Larj4IKfw400';
 
 const ALL_TEAMS = [
   "Brazil","Austria","Tunisia","Cape Verde",
