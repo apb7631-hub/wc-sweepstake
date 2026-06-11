@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin — WC2026 Sweepstake</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -18,59 +18,65 @@
     }
     body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-    /* ── GATE ── */
-    #gate { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 999; padding: 20px; }
-    .gate-box { background: var(--bg2); border: 1px solid var(--border); border-top: 3px solid var(--red); border-radius: 8px; padding: 40px 36px; width: 100%; max-width: 380px; text-align: center; }
-    .gate-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-    .gate-title { font-family: 'Barlow Condensed', sans-serif; font-size: 2rem; font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 4px; }
-    .gate-group { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 600; color: var(--muted); margin-bottom: 24px; }
-    .gate-input { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 5px; padding: 12px 16px; font-family: 'Barlow', sans-serif; font-size: 1rem; color: var(--text); outline: none; margin-bottom: 12px; transition: border-color 0.15s; text-align: center; letter-spacing: 4px; }
-    .gate-input:focus { border-color: var(--red); }
-    .gate-input.error { border-color: var(--red2); animation: shake 0.3s; }
+    /* ── SCREENS (gate / token-setup / app) ── */
+    .screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 999; padding: 20px; }
+    .screen.hidden { display: none; }
+    .box { background: var(--bg2); border: 1px solid var(--border); border-top: 3px solid var(--red); border-radius: 8px; padding: 40px 36px; width: 100%; max-width: 400px; text-align: center; }
+    .box.green-top { border-top-color: var(--green); }
+    .box-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+    .box-title { font-family: 'Barlow Condensed', sans-serif; font-size: 2rem; font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 6px; }
+    .box-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+    .box-sub b { color: var(--text); }
+    .field { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 5px; padding: 12px 16px; font-family: 'Barlow', sans-serif; font-size: 0.95rem; color: var(--text); outline: none; margin-bottom: 12px; transition: border-color 0.15s; }
+    .field:focus { border-color: var(--red); }
+    .field.center { text-align: center; letter-spacing: 4px; }
+    .field.error { border-color: var(--red2); animation: shake 0.3s; }
+    .field.token-field { font-size: 0.78rem; letter-spacing: 1px; font-family: monospace; }
     @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
-    .gate-btn { width: 100%; background: var(--red); color: #fff; border: none; border-radius: 5px; padding: 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; }
-    .gate-btn:hover { background: var(--red2); }
-    .gate-error { font-size: 0.78rem; color: var(--red2); margin-top: 10px; min-height: 18px; }
-    .gate-loading { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; color: var(--muted); margin-bottom: 20px; }
+    .btn-full { width: 100%; border: none; border-radius: 5px; padding: 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; margin-bottom: 8px; }
+    .btn-red   { background: var(--red);   color: #fff; }
+    .btn-red:hover { background: var(--red2); }
+    .btn-green { background: var(--green2); color: #fff; }
+    .btn-green:hover { background: var(--green); }
+    .btn-ghost-full { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+    .btn-ghost-full:hover { border-color: var(--muted); color: var(--text); }
+    .box-error { font-size: 0.78rem; color: var(--red2); margin-top: 4px; min-height: 18px; }
+    .token-hint { font-size: 0.75rem; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
+    .token-hint a { color: var(--gold); }
 
     /* ── APP ── */
     #app { display: none; }
-
-    /* ── HERO ── */
     .hero { background: linear-gradient(135deg, #0C0E14 0%, #1a0a0a 50%, #0C0E14 100%); border-bottom: 3px solid var(--red); padding: 28px 20px 22px; text-align: center; position: relative; overflow: hidden; }
     .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% -20%, rgba(220,38,38,0.15) 0%, transparent 70%); pointer-events: none; }
     .hero-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
     .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(1.8rem, 6vw, 3rem); font-weight: 800; text-transform: uppercase; color: #fff; line-height: 1; }
     .hero h1 em { font-style: normal; color: var(--gold); }
-    .hero-group { font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; color: var(--muted); margin-top: 6px; }
-    .hero-actions { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
-    .btn-sm { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; padding: 6px 14px; cursor: pointer; text-decoration: none; }
-    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--muted); }
-    .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
-    .btn-danger { background: rgba(220,38,38,0.12); border: 1px solid rgba(220,38,38,0.3); color: var(--red2); }
-    .btn-danger:hover { background: rgba(220,38,38,0.25); }
+    .hero-sub { font-size: 0.85rem; color: var(--muted); margin-top: 6px; }
 
-    /* ── META BAR ── */
-    .meta-bar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 8px 20px; display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
-    .meta-item { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
-    .meta-item span { color: var(--gold); }
+    .action-bar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .btn { font-family: 'Barlow Condensed', sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; padding: 8px 18px; cursor: pointer; border: none; transition: all 0.15s; }
+    .btn-publish { background: var(--green2); color: #fff; }
+    .btn-publish:hover { background: var(--green); }
+    .btn-publish:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-reset  { background: transparent; border: 1px solid rgba(220,38,38,0.3); color: var(--red2); }
+    .btn-reset:hover { background: rgba(220,38,38,0.15); }
+    .btn-token  { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+    .btn-token:hover { border-color: var(--muted); color: var(--text); }
+    .btn-logout { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+    .btn-logout:hover { border-color: var(--muted); color: var(--text); }
 
-    /* ── CONTENT ── */
     .content { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; display: flex; flex-direction: column; gap: 14px; }
-
-    /* ── PLAYER CARD ── */
     .player-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
     .player-header { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg3); border-bottom: 1px solid var(--border); }
     .player-label { font-family: 'Barlow Condensed', sans-serif; font-size: 1.15rem; font-weight: 800; text-transform: uppercase; color: #fff; flex: 1; }
-    .player-pts { font-family: 'Barlow Condensed', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--gold); line-height: 1; }
+    .player-pts { font-family: 'Barlow Condensed', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--gold); }
     .player-rec { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; color: var(--muted); margin-left: 6px; }
 
-    /* ── TEAM ROW ── */
     .team-row { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
     .team-row:last-child { border-bottom: none; }
     .team-name { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 700; text-transform: uppercase; color: var(--text); min-width: 140px; flex: 1; }
-    .team-record { display: flex; gap: 5px; }
-    .rec { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; min-width: 36px; text-align: center; }
+    .rec-badges { display: flex; gap: 5px; }
+    .rec { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; padding: 3px 8px; border-radius: 3px; min-width: 36px; text-align: center; }
     .rec-w { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
     .rec-d { background: rgba(251,191,36,0.1); color: var(--gold2); border: 1px solid rgba(251,191,36,0.25); }
     .rec-l { background: rgba(220,38,38,0.1); color: var(--red2); border: 1px solid rgba(220,38,38,0.25); }
@@ -82,300 +88,441 @@
     .btn-d:hover { background: rgba(251,191,36,0.28); }
     .btn-l { background: rgba(220,38,38,0.12); color: var(--red2); border: 1px solid rgba(220,38,38,0.3); }
     .btn-l:hover { background: rgba(220,38,38,0.28); }
-    .btn-undo { background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 4px; padding: 7px 10px; font-size: 0.8rem; cursor: pointer; line-height: 1; }
+    .btn-undo { background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 4px; padding: 7px 10px; font-size: 0.8rem; cursor: pointer; }
     .btn-undo:hover { border-color: var(--muted); color: var(--text); }
     .btn-undo:disabled { opacity: 0.3; cursor: not-allowed; }
 
-    /* history pills */
-    .history-pills { display: flex; gap: 3px; flex-wrap: wrap; min-width: 60px; }
-    .pill { width: 14px; height: 14px; border-radius: 2px; }
-    .pill-w { background: var(--green2); }
-    .pill-d { background: var(--gold2); }
-    .pill-l { background: var(--red); }
+    /* ── MODAL (reset) ── */
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+    .overlay.open { display: flex; }
 
     /* ── TOAST ── */
-    #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--bg3); border: 1px solid var(--border); border-left: 3px solid var(--green); border-radius: 6px; padding: 10px 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--text); z-index: 100; transition: transform 0.25s ease; white-space: nowrap; }
+    #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--bg3); border: 1px solid var(--border); border-left: 3px solid var(--green); border-radius: 6px; padding: 10px 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--text); z-index: 300; transition: transform 0.25s ease; white-space: nowrap; pointer-events: none; }
     #toast.show { transform: translateX(-50%) translateY(0); }
-
-    /* ── MODAL ── */
-    #modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
-    #modal-overlay.open { display: flex; }
-    .modal-box { background: var(--bg2); border: 1px solid var(--border); border-top: 3px solid var(--red); border-radius: 8px; padding: 32px 28px; max-width: 360px; width: 100%; text-align: center; }
-    .modal-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.4rem; font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 10px; }
-    .modal-body { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
-    .modal-actions { display: flex; gap: 10px; }
-    .modal-cancel { flex: 1; background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 5px; padding: 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
-    .modal-confirm { flex: 1; background: var(--red); border: none; color: #fff; border-radius: 5px; padding: 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
-    .modal-confirm:hover { background: var(--red2); }
+    #toast.danger { border-left-color: var(--red2); }
 
     /* spinner */
-    .spinner { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spinning 0.7s linear infinite; vertical-align: middle; margin-right: 6px; }
+    @keyframes spinning { to { transform: rotate(360deg); } }
 
     @media (max-width: 560px) {
       .team-name { min-width: 100px; font-size: 0.88rem; }
       .result-btn { padding: 6px 10px; font-size: 0.75rem; }
-      .history-pills { display: none; }
     }
-    @media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
   </style>
 </head>
 <body>
 
-<!-- GATE -->
-<div id="gate">
-  <div class="gate-box">
-    <div class="gate-eyebrow">FIFA World Cup 2026</div>
-    <div class="gate-title">Admin Panel</div>
-    <div class="gate-group" id="gate-group-name">Loading group...</div>
-    <div class="gate-loading" id="gate-loading">Finding your sweepstake...</div>
-    <input type="password" id="pw-input" class="gate-input" placeholder="••••••••" style="display:none" autocomplete="current-password" />
-    <button class="gate-btn" id="unlock-btn" onclick="checkPassword()" style="display:none">Unlock</button>
-    <div class="gate-error" id="gate-error"></div>
+<!-- ── SCREEN 1: PASSWORD GATE ── -->
+<div class="screen" id="screen-gate">
+  <div class="box">
+    <div class="box-eyebrow">FIFA World Cup 2026</div>
+    <div class="box-title">Admin Panel</div>
+    <div class="box-sub">Enter password to manage match results</div>
+    <input type="password" id="pw-input" class="field center" placeholder="••••••••" autocomplete="current-password"/>
+    <button class="btn-full btn-red" onclick="checkPassword()">Unlock</button>
+    <div class="box-error" id="gate-error"></div>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ── SCREEN 2: GITHUB TOKEN SETUP ── -->
+<div class="screen hidden" id="screen-token">
+  <div class="box green-top">
+    <div class="box-eyebrow">One-time setup</div>
+    <div class="box-title">GitHub Token</div>
+    <div class="box-sub">Paste your GitHub token below. It stays <b>private in your browser</b> — never in the code. This is needed to auto-publish the live table with one click.</div>
+    <div class="token-hint">
+      To get a token: GitHub → profile picture → Settings → Developer settings<br>
+      → Personal access tokens → Tokens (classic) → Generate new token (classic)<br>
+      → tick <b>repo</b> → Generate → copy the <b>ghp_...</b> token
+    </div>
+    <input type="password" id="token-input" class="field token-field" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"/>
+    <button class="btn-full btn-green" onclick="saveToken()">Save Token &amp; Continue</button>
+    <button class="btn-full btn-ghost-full" onclick="skipToken()">Skip — I'll update manually</button>
+    <div class="box-error" id="token-error"></div>
+  </div>
+</div>
+
+<!-- ── APP ── -->
 <div id="app">
   <header class="hero">
     <div class="hero-eyebrow">FIFA World Cup 2026 — Admin</div>
     <h1>Results <em>Panel</em></h1>
-    <div class="hero-group" id="app-group-name"></div>
-    <div class="hero-actions">
-      <a href="#" id="table-link" class="btn-sm btn-ghost">← Live Table</a>
-      <button class="btn-sm btn-ghost" onclick="logout()">Log Out</button>
-      <button class="btn-sm btn-danger" onclick="openResetModal()">Reset All Data</button>
-    </div>
+    <div class="hero-sub">Click W / D / L after each match, then hit <b style="color:#fff">Publish Live</b></div>
   </header>
 
-  <div class="meta-bar">
-    <div class="meta-item">Last updated: <span id="last-updated">—</span></div>
-    <div class="meta-item">Matches logged: <span id="total-matches">0</span></div>
-    <div class="meta-item">Group code: <span id="meta-code">—</span></div>
+  <div class="action-bar">
+    <button class="btn btn-publish" id="publish-btn" onclick="publishLive()">🚀 Publish Live</button>
+    <button class="btn btn-reset"  onclick="openReset()">Reset All</button>
+    <button class="btn btn-token"  onclick="showTokenScreen()">Change Token</button>
+    <button class="btn btn-logout" onclick="logout()">Log Out</button>
   </div>
 
   <div class="content" id="content"></div>
 </div>
 
-<!-- MODAL -->
-<div id="modal-overlay">
-  <div class="modal-box">
-    <div class="modal-title">Reset All Data?</div>
-    <p class="modal-body">This will delete every result logged for this group. The table goes back to zero. This cannot be undone.</p>
-    <div class="modal-actions">
-      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
-      <button class="modal-confirm" onclick="resetAll()">Yes, Reset</button>
+<!-- ── RESET MODAL ── -->
+<div class="overlay" id="reset-overlay">
+  <div class="box" style="position:relative;z-index:201">
+    <div class="box-title">Reset All?</div>
+    <p class="box-sub">Wipes every result back to zero. Cannot be undone.</p>
+    <div style="display:flex;gap:10px">
+      <button class="btn-full btn-ghost-full" style="margin:0" onclick="closeReset()">Cancel</button>
+      <button class="btn-full btn-red" style="margin:0" onclick="confirmReset()">Yes, Reset</button>
     </div>
   </div>
 </div>
 
 <div id="toast"></div>
 
-<script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const sb = initSupabase();
-  const SESSION_KEY = 'sweepstake_admin_auth';
+  const PASSWORD  = 'WC2026!';
+  const STORE_KEY = 'wc2026_results';
+  const TOKEN_KEY = 'wc2026_gh_token';
+  const GH_OWNER  = 'apb7631-hub';
+  const GH_REPO   = 'wc-sweepstake';
+  const GH_FILE   = 'index.html';
 
-  let group   = null;
-  let players = [];
-  let results = [];
+  const players = [
+    { name: "Lex",  teams: ["Brazil","Austria","Tunisia","Cape Verde"] },
+    { name: "KB",   teams: ["Uruguay","USA","Bosnia Herzegovina","Uzbekistan"] },
+    { name: "WOP",  teams: ["France","Australia","Iran","Panama"] },
+    { name: "Bash", teams: ["Argentina","Japan","Saudi Arabia","Jordan"] },
+    { name: "Fou",  teams: ["Mexico","South Korea","Czechia","Haiti"] },
+    { name: "Hish", teams: ["England","Senegal","Paraguay","Qatar"] },
+    { name: "SLY",  teams: ["Portugal","Switzerland","Norway","South Africa"] },
+    { name: "QC",   teams: ["Colombia","Canada","Algeria","Ghana"] },
+    { name: "Saad", teams: ["Netherlands","Morocco","Turkey","Iraq"] },
+    { name: "Sam",  teams: ["Spain","Croatia","Egypt","Curaçao"] },
+    { name: "Naj",  teams: ["Belgium","Ivory Coast","Sweden","New Zealand"] },
+    { name: "Toff", teams: ["Germany","Ecuador","Scotland","DR Congo"] },
+  ];
 
-  // ── INIT ────────────────────────────────────────────────
-  async function init() {
-    const code = getParam('code');
-    if (!code) { showGateError('No group code in URL'); return; }
+  let results = {};
 
-    // Load group from Supabase
-    const { data: grp, error } = await sb.from('groups').select('*').eq('code', code.toUpperCase()).single();
-    if (error || !grp) { showGateError(`No group found with code "${code.toUpperCase()}"`); return; }
-    group = grp;
-
-    // Load players
-    const { data: pl } = await sb.from('players').select('*').eq('group_id', grp.id).order('created_at');
-    players = pl || [];
-
-    // Update gate UI
-    document.getElementById('gate-group-name').textContent = grp.name;
-    document.getElementById('gate-loading').style.display  = 'none';
-    document.getElementById('pw-input').style.display      = 'block';
-    document.getElementById('unlock-btn').style.display    = 'block';
-    document.getElementById('pw-input').focus();
-
-    // Check existing session
-    const session = sessionStorage.getItem(SESSION_KEY);
-    if (session === grp.id) unlock();
+  function loadResults() {
+    try { results = JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e) { results = {}; }
+  }
+  function saveResults() { localStorage.setItem(STORE_KEY, JSON.stringify(results)); }
+  function getTeam(team) { return results[team] || { w:0, d:0, l:0 }; }
+  function playerTotals(p) {
+    let w=0,d=0,l=0;
+    p.teams.forEach(t => { const r=getTeam(t); w+=r.w; d+=r.d; l+=r.l; });
+    return { w, d, l, pts: w*3+d };
   }
 
-  function showGateError(msg) {
-    document.getElementById('gate-loading').textContent = msg;
-    document.getElementById('gate-error').textContent   = 'Check the URL and try again.';
-  }
-
-  async function checkPassword() {
+  // ── AUTH ──
+  function checkPassword() {
     const val = document.getElementById('pw-input').value;
-    if (val === group.admin_password) {
-      sessionStorage.setItem(SESSION_KEY, group.id);
-      unlock();
+    if (val === PASSWORD) {
+      sessionStorage.setItem('wc_admin','1');
+      document.getElementById('screen-gate').classList.add('hidden');
+      if (!localStorage.getItem(TOKEN_KEY)) {
+        document.getElementById('screen-token').classList.remove('hidden');
+      } else {
+        showApp();
+      }
     } else {
       const inp = document.getElementById('pw-input');
       inp.classList.add('error');
-      document.getElementById('gate-error').textContent = 'Incorrect password. Try again.';
+      document.getElementById('gate-error').textContent = 'Incorrect password.';
       setTimeout(() => inp.classList.remove('error'), 400);
       inp.value = '';
     }
   }
 
-  function unlock() {
-    document.getElementById('gate').style.display = 'none';
-    document.getElementById('app').style.display  = 'block';
-    document.getElementById('app-group-name').textContent = group.name;
-    document.getElementById('meta-code').textContent      = group.code;
-    document.getElementById('table-link').href = `table.html?code=${group.code}`;
-    loadAndRender();
+  function saveToken() {
+    const val = document.getElementById('token-input').value.trim();
+    if (!val.startsWith('ghp_') && !val.startsWith('github_pat_')) {
+      document.getElementById('token-error').textContent = 'Token should start with ghp_ — check and try again.';
+      return;
+    }
+    localStorage.setItem(TOKEN_KEY, val);
+    document.getElementById('screen-token').classList.add('hidden');
+    showApp();
+    showToast('Token saved — auto-publish is active ✓');
+  }
 
-    // Real-time subscription so admin panel stays in sync
-    sb.channel(`admin-results-${group.id}`)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'results', filter: `group_id=eq.${group.id}` }, loadAndRender)
-      .subscribe();
+  function skipToken() {
+    document.getElementById('screen-token').classList.add('hidden');
+    showApp();
+  }
+
+  function showTokenScreen() {
+    document.getElementById('screen-token').classList.remove('hidden');
+    document.getElementById('token-input').value = localStorage.getItem(TOKEN_KEY) || '';
   }
 
   function logout() {
-    sessionStorage.removeItem(SESSION_KEY);
+    sessionStorage.removeItem('wc_admin');
     location.reload();
   }
 
+  function showApp() {
+    document.getElementById('app').style.display = 'block';
+    const hasToken = !!localStorage.getItem(TOKEN_KEY);
+    const btn = document.getElementById('publish-btn');
+    btn.textContent = hasToken ? '🚀 Publish Live' : '⬇ Download Table';
+    render();
+  }
+
   document.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && document.getElementById('gate').style.display !== 'none') checkPassword();
+    if (e.key === 'Enter') {
+      if (!document.getElementById('screen-gate').classList.contains('hidden')) checkPassword();
+      if (!document.getElementById('screen-token').classList.contains('hidden')) saveToken();
+    }
   });
 
-  // ── DATA ────────────────────────────────────────────────
-  async function loadAndRender() {
-    const { data } = await sb.from('results').select('*').eq('group_id', group.id).order('logged_at');
-    results = data || [];
-    renderAll();
-  }
-
-  // tally per team from results array
-  function tallyTeam(team) {
-    return results
-      .filter(r => r.team === team)
-      .reduce((acc, r) => { acc[r.result]++; return acc; }, { w: 0, d: 0, l: 0 });
-  }
-
-  function playerPts(player) {
-    let w = 0, d = 0, l = 0;
-    player.teams.forEach(t => { const td = tallyTeam(t); w += td.w; d += td.d; l += td.l; });
-    return { w, d, l, pts: w * 3 + d };
-  }
-
-  // ── RENDER ──────────────────────────────────────────────
-  function renderAll() {
-    // Meta bar
-    const latest = [...results].sort((a, b) => new Date(b.logged_at) - new Date(a.logged_at))[0];
-    document.getElementById('last-updated').textContent = latest
-      ? new Date(latest.logged_at).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
-      : '—';
-    document.getElementById('total-matches').textContent = results.length;
-
+  // ── RENDER ──
+  function render() {
     const content = document.getElementById('content');
     content.innerHTML = '';
-
     players.forEach(player => {
-      const totals = playerPts(player);
+      const tot = playerTotals(player);
       const card = document.createElement('div');
       card.className = 'player-card';
       card.innerHTML = `
         <div class="player-header">
-          <div class="player-label">${esc(player.name)}</div>
+          <div class="player-label">${player.name}</div>
           <div>
-            <span class="player-pts">${totals.pts}</span>
-            <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);">pts</span>
-            <span class="player-rec">${totals.w}W ${totals.d}D ${totals.l}L</span>
+            <span class="player-pts">${tot.pts}</span>
+            <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);"> pts</span>
+            <span class="player-rec">${tot.w}W ${tot.d}D ${tot.l}L</span>
           </div>
         </div>
-        ${player.teams.map(team => teamRowHtml(team)).join('')}`;
+        ${player.teams.map(t => teamRow(t)).join('')}`;
       content.appendChild(card);
     });
   }
 
-  function teamRowHtml(team) {
-    const td   = tallyTeam(team);
-    const hist = results.filter(r => r.team === team).map(r => r.result);
-    const pills = hist.slice(-14).map(r => `<div class="pill pill-${r}"></div>`).join('');
-    const lastId = hist.length > 0
-      ? results.filter(r => r.team === team).sort((a,b) => new Date(b.logged_at)-new Date(a.logged_at))[0]?.id
-      : null;
-
+  function teamRow(team) {
+    const r = getTeam(team);
     return `
       <div class="team-row">
-        <div class="team-name">${esc(team)}</div>
-        <div class="team-record">
-          <span class="rec rec-w">${td.w}W</span>
-          <span class="rec rec-d">${td.d}D</span>
-          <span class="rec rec-l">${td.l}L</span>
+        <div class="team-name">${team}</div>
+        <div class="rec-badges">
+          <span class="rec rec-w">${r.w}W</span>
+          <span class="rec rec-d">${r.d}D</span>
+          <span class="rec rec-l">${r.l}L</span>
         </div>
-        <div class="history-pills">${pills}</div>
         <div class="team-btns">
-          <button class="result-btn btn-w" data-team="${esc(team)}" data-res="w" onclick="logResult(this)">W</button>
-          <button class="result-btn btn-d" data-team="${esc(team)}" data-res="d" onclick="logResult(this)">D</button>
-          <button class="result-btn btn-l" data-team="${esc(team)}" data-res="l" onclick="logResult(this)">L</button>
-          <button class="btn-undo" data-id="${lastId || ''}" onclick="undoResult(this)" title="Undo last result" ${!lastId ? 'disabled' : ''}>↩</button>
+          <button class="result-btn btn-w" onclick="log('${team}','w')">W</button>
+          <button class="result-btn btn-d" onclick="log('${team}','d')">D</button>
+          <button class="result-btn btn-l" onclick="log('${team}','l')">L</button>
+          <button class="btn-undo" onclick="undo('${team}')" ${(r.w+r.d+r.l)===0?'disabled':''}>↩</button>
         </div>
       </div>`;
   }
 
-  // ── LOG / UNDO ───────────────────────────────────────────
-  async function logResult(btn) {
-    const team   = btn.dataset.team;
-    const result = btn.dataset.res;
+  // ── LOG / UNDO ──
+  function log(team, res) {
+    if (!results[team]) results[team] = { w:0, d:0, l:0 };
+    results[team][res]++;
+    saveResults();
+    render();
+    const labels = { w:'Win logged', d:'Draw logged', l:'Loss logged' };
+    showToast(`${team} — ${labels[res]} ✓`);
+  }
+
+  function undo(team) {
+    const r = results[team];
+    if (!r) return;
+    if (r.l > 0) r.l--;
+    else if (r.d > 0) r.d--;
+    else if (r.w > 0) r.w--;
+    saveResults();
+    render();
+    showToast(`${team} — last result undone`);
+  }
+
+  // ── BUILD HTML ──
+  function buildIndexHtml() {
+    const today = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+    const playerData = players.map(p => {
+      const tot = playerTotals(p);
+      return `    { name: "${p.name}", teams: ${JSON.stringify(p.teams)}, w:${tot.w}, d:${tot.d}, l:${tot.l} }`;
+    }).join(',\n');
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World Cup 2026 Sweepstake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --red:#DC2626;--red2:#EF4444;--gold:#FBBF24;--gold2:#F59E0B;--bg:#0C0E14;--bg2:#13161F;--bg3:#1A1E2E;--border:#252A3A;--text:#F0F4FF;--muted:#6B7499; }
+    body { font-family:'Barlow',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    .hero { background:linear-gradient(135deg,#0C0E14 0%,#1a0a0a 50%,#0C0E14 100%); border-bottom:3px solid var(--red); padding:40px 20px 32px; text-align:center; position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 50% -20%,rgba(220,38,38,0.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 10% 110%,rgba(251,191,36,0.08) 0%,transparent 60%); pointer-events:none; }
+    .hero-eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; font-weight:700; letter-spacing:3.5px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+    .hero h1 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(2.4rem,8vw,4.2rem); font-weight:800; text-transform:uppercase; line-height:0.95; color:#fff; letter-spacing:-0.5px; }
+    .hero h1 em { font-style:normal; color:var(--gold); }
+    .hero-sub { margin-top:12px; font-size:0.9rem; color:var(--muted); }
+    .hero-badge { display:inline-flex; align-items:center; gap:6px; margin-top:16px; background:rgba(220,38,38,0.15); border:1px solid rgba(220,38,38,0.3); border-radius:4px; padding:5px 14px; font-family:'Barlow Condensed',sans-serif; font-size:0.82rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--red2); }
+    .dot { width:6px; height:6px; border-radius:50%; background:var(--red2); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+    .scoring-strip { background:var(--bg2); border-bottom:1px solid var(--border); padding:10px 20px; display:flex; justify-content:center; gap:24px; flex-wrap:wrap; }
+    .key-item { font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--muted); }
+    .key-item b { color:var(--gold); margin-right:4px; }
+    .table-section { max-width:860px; margin:32px auto; padding:0 16px 40px; }
+    table { width:100%; border-collapse:collapse; }
+    thead tr { border-bottom:2px solid var(--border); }
+    thead th { font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); padding:10px 14px; text-align:left; }
+    thead th.c { text-align:center; }
+    tbody tr { border-bottom:1px solid var(--border); transition:background 0.15s; }
+    tbody tr:hover { background:var(--bg3); }
+    tbody tr.rank-1 { background:rgba(251,191,36,0.06); }
+    tbody tr.rank-2 { background:rgba(180,180,200,0.04); }
+    tbody tr.rank-3 { background:rgba(180,100,40,0.04); }
+    td { padding:14px 14px; vertical-align:middle; }
+    td.c { text-align:center; }
+    .pos-wrap { display:flex; align-items:center; justify-content:center; width:32px; }
+    .medal { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; }
+    .medal-1 { background:var(--gold); color:#0C0E14; }
+    .medal-2 { background:#C0C8D8; color:#0C0E14; }
+    .medal-3 { background:#CD7F32; color:#fff; }
+    .medal-n { color:var(--muted); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.95rem; }
+    .player-name { font-family:'Barlow Condensed',sans-serif; font-size:1.2rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#fff; line-height:1.1; }
+    .team-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:5px; }
+    .tag { font-size:0.7rem; font-weight:500; color:var(--muted); background:var(--bg3); border:1px solid var(--border); border-radius:3px; padding:2px 7px; white-space:nowrap; }
+    .stat { font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:#8898BB; text-align:center; }
+    .pts-cell { text-align:center; }
+    .pts-val { font-family:'Barlow Condensed',sans-serif; font-size:1.6rem; font-weight:800; color:var(--gold); line-height:1; }
+    .pts-label { font-family:'Barlow Condensed',sans-serif; font-size:0.6rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); }
+    .footer-bar { text-align:center; padding:0 20px 40px; font-size:0.78rem; color:var(--muted); font-family:'Barlow Condensed',sans-serif; letter-spacing:0.5px; }
+    @media(max-width:500px){.tag{font-size:0.65rem;padding:1px 5px}.player-name{font-size:1rem}.pts-val{font-size:1.3rem}td{padding:11px 8px}}
+    @media(prefers-reduced-motion:reduce){.dot{animation:none}tbody tr{transition:none}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-eyebrow">FIFA World Cup 2026</div>
+    <h1>Sweepstake<br><em>League Table</em></h1>
+    <p class="hero-sub">4 teams per player &bull; Points tallied after every matchday</p>
+    <div class="hero-badge"><span class="dot"></span><span>Last updated: ${today}</span></div>
+  </header>
+  <div class="scoring-strip">
+    <div class="key-item"><b>3</b> Win</div>
+    <div class="key-item"><b>1</b> Draw</div>
+    <div class="key-item"><b>0</b> Loss</div>
+  </div>
+  <section class="table-section">
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th class="c">#</th><th>Player</th><th class="c">W</th><th class="c">D</th><th class="c">L</th><th class="c">PTS</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+  <div class="footer-bar">Last updated: ${today} &bull; World Cup 2026 Sweepstake</div>
+<script>
+  const players = [
+${playerData}
+  ];
+  const pts = p => p.w*3+p.d;
+  function render() {
+    const sorted = [...players].sort((a,b)=>pts(b)-pts(a)||b.w-a.w||b.d-a.d);
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
+    sorted.forEach((p,i)=>{
+      const pos=i+1, rc=pos<=3?'rank-'+pos:'';
+      const badge=pos<=3?'<span class="medal medal-'+pos+'">'+pos+'</span>':'<span class="medal-n">'+pos+'</span>';
+      const tags=p.teams.map(t=>'<span class="tag">'+t+'</span>').join('');
+      tbody.innerHTML+='<tr class="'+rc+'"><td class="c"><div class="pos-wrap">'+badge+'</div></td><td><div class="player-name">'+p.name+'</div><div class="team-tags">'+tags+'</div></td><td class="stat">'+p.w+'</td><td class="stat">'+p.d+'</td><td class="stat">'+p.l+'</td><td class="pts-cell"><div class="pts-val">'+pts(p)+'</div><div class="pts-label">pts</div></td></tr>';
+    });
+  }
+  render();
+<\/script>
+</body>
+</html>`;
+  }
+
+  // ── PUBLISH LIVE (GitHub API) ──
+  async function publishLive() {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) { downloadFallback(); return; }
+
+    const btn = document.getElementById('publish-btn');
     btn.disabled = true;
+    btn.innerHTML = '<span class="spin"></span>Publishing...';
 
-    const { error } = await sb.from('results').insert({ group_id: group.id, team, result });
-    if (error) { showToast('Error: ' + error.message, true); btn.disabled = false; return; }
+    try {
+      const apiBase = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
+      const headers = { Authorization: `token ${token}`, 'Content-Type': 'application/json' };
 
-    const labels = { w: 'Win ✓', d: 'Draw ✓', l: 'Loss ✓' };
-    showToast(`${team} — ${labels[result]}`);
-    // loadAndRender called by realtime subscription
+      // 1. Get current file SHA
+      const getRes = await fetch(apiBase, { headers });
+      if (!getRes.ok) throw new Error(`GitHub error: ${getRes.status} — check your token`);
+      const fileData = await getRes.json();
+      const sha = fileData.sha;
+
+      // 2. Push updated file
+      const html    = buildIndexHtml();
+      const content = btoa(unescape(encodeURIComponent(html)));
+      const putRes  = await fetch(apiBase, {
+        method: 'PUT', headers,
+        body: JSON.stringify({ message: 'Update sweepstake scores', content, sha })
+      });
+      if (!putRes.ok) {
+        const err = await putRes.json();
+        throw new Error(err.message || `Push failed: ${putRes.status}`);
+      }
+
+      showToast('Live table updated! 🏆 Goes live in ~60 seconds');
+    } catch(e) {
+      showToast('Publish failed: ' + e.message, true);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '🚀 Publish Live';
+    }
   }
 
-  async function undoResult(btn) {
-    const id = btn.dataset.id;
-    if (!id) return;
-    btn.disabled = true;
-
-    const { error } = await sb.from('results').delete().eq('id', id);
-    if (error) { showToast('Error: ' + error.message, true); btn.disabled = false; return; }
-    showToast('Last result undone');
+  function downloadFallback() {
+    const html = buildIndexHtml();
+    const blob = new Blob([html], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'index.html';
+    a.click();
+    showToast('index.html downloaded — upload to GitHub to go live');
   }
 
-  // ── RESET ────────────────────────────────────────────────
-  function openResetModal() { document.getElementById('modal-overlay').classList.add('open'); }
-  function closeModal()     { document.getElementById('modal-overlay').classList.remove('open'); }
-
-  async function resetAll() {
-    closeModal();
-    const { error } = await sb.from('results').delete().eq('group_id', group.id);
-    if (error) { showToast('Reset failed: ' + error.message, true); return; }
-    showToast('All data reset to zero', true);
+  // ── RESET ──
+  function openReset()  { document.getElementById('reset-overlay').classList.add('open'); }
+  function closeReset() { document.getElementById('reset-overlay').classList.remove('open'); }
+  function confirmReset() {
+    results = {};
+    saveResults();
+    closeReset();
+    render();
+    showToast('All results reset to zero');
   }
 
-  // ── TOAST ────────────────────────────────────────────────
+  // ── TOAST ──
   let toastTimer;
   function showToast(msg, danger = false) {
     const t = document.getElementById('toast');
     t.textContent = msg;
-    t.style.borderLeftColor = danger ? 'var(--red)' : 'var(--green)';
+    t.className = danger ? 'danger' : '';
     t.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
   }
 
-  function esc(str) {
-    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  // ── BOOT ──
+  loadResults();
+  if (sessionStorage.getItem('wc_admin') === '1') {
+    document.getElementById('screen-gate').classList.add('hidden');
+    if (!localStorage.getItem(TOKEN_KEY)) {
+      document.getElementById('screen-token').classList.remove('hidden');
+    } else {
+      showApp();
+    }
   }
-
-  init();
 </script>
 </body>
 </html>
