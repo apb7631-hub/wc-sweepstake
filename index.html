@@ -9,419 +9,99 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --red:    #DC2626;
-      --red2:   #EF4444;
-      --gold:   #FBBF24;
-      --gold2:  #F59E0B;
-      --bg:     #0C0E14;
-      --bg2:    #13161F;
-      --bg3:    #1A1E2E;
-      --border: #252A3A;
-      --text:   #F0F4FF;
-      --muted:  #6B7499;
-    }
-
-    body {
-      font-family: 'Barlow', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 0;
-    }
-
-    /* ── HERO BANNER ── */
-    .hero {
-      background: linear-gradient(135deg, #0C0E14 0%, #1a0a0a 50%, #0C0E14 100%);
-      border-bottom: 3px solid var(--red);
-      padding: 40px 20px 32px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 80% at 50% -20%, rgba(220,38,38,0.18) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 10% 110%, rgba(251,191,36,0.08) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .hero-eyebrow {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-
-    .hero h1 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(2.4rem, 8vw, 4.2rem);
-      font-weight: 800;
-      text-transform: uppercase;
-      line-height: 0.95;
-      color: #fff;
-      letter-spacing: -0.5px;
-    }
-
-    .hero h1 em {
-      font-style: normal;
-      color: var(--gold);
-    }
-
-    .hero-sub {
-      margin-top: 12px;
-      font-size: 0.9rem;
-      color: var(--muted);
-      letter-spacing: 0.3px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 16px;
-      background: rgba(220,38,38,0.15);
-      border: 1px solid rgba(220,38,38,0.3);
-      border-radius: 4px;
-      padding: 5px 14px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--red2);
-    }
-
-    .dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--red2);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.4; transform: scale(0.7); }
-    }
-
-    /* ── SCORING KEY ── */
-    .scoring-strip {
-      background: var(--bg2);
-      border-bottom: 1px solid var(--border);
-      padding: 10px 20px;
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .key-item {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .key-item b { color: var(--gold); margin-right: 4px; }
-
-    /* ── TABLE WRAPPER ── */
-    .table-section {
-      max-width: 860px;
-      margin: 32px auto;
-      padding: 0 16px 40px;
-    }
-
-    .table-wrap { overflow-x: auto; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    thead tr {
-      border-bottom: 2px solid var(--border);
-    }
-
-    thead th {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: 10px 14px;
-      text-align: left;
-    }
-
-    thead th.c { text-align: center; }
-
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s ease;
-      cursor: default;
-    }
-
-    tbody tr:hover { background: var(--bg3); }
-
-    tbody tr.rank-1 { background: rgba(251,191,36,0.06); }
-    tbody tr.rank-2 { background: rgba(180,180,200,0.04); }
-    tbody tr.rank-3 { background: rgba(180,100,40,0.04); }
-
-    td {
-      padding: 14px 14px;
-      vertical-align: middle;
-    }
-
-    td.c { text-align: center; }
-
-    .pos-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-    }
-
-    .medal {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 0.85rem;
-    }
-
-    .medal-1 { background: var(--gold);  color: #0C0E14; }
-    .medal-2 { background: #C0C8D8;      color: #0C0E14; }
-    .medal-3 { background: #CD7F32;      color: #fff; }
-    .medal-n { color: var(--muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.95rem; }
-
-    .player-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #fff;
-      line-height: 1.1;
-    }
-
-    .team-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-top: 5px;
-    }
-
-    .tag {
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: var(--muted);
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 2px 7px;
-      white-space: nowrap;
-    }
-
-    .stat {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #8898BB;
-      text-align: center;
-    }
-
-    .pts-cell { text-align: center; }
-
-    .pts-val {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--gold);
-      line-height: 1;
-    }
-
-    .pts-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* ── FOOTER ── */
-    .footer-bar {
-      text-align: center;
-      padding: 0 20px 40px;
-      font-size: 0.78rem;
-      color: var(--muted);
-      font-family: 'Barlow Condensed', sans-serif;
-      letter-spacing: 0.5px;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 500px) {
-      .tag { font-size: 0.65rem; padding: 1px 5px; }
-      .player-name { font-size: 1rem; }
-      .pts-val { font-size: 1.3rem; }
-      td { padding: 11px 8px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .dot { animation: none; }
-      tbody tr { transition: none; }
-    }
+    :root { --red:#DC2626;--red2:#EF4444;--gold:#FBBF24;--gold2:#F59E0B;--bg:#0C0E14;--bg2:#13161F;--bg3:#1A1E2E;--border:#252A3A;--text:#F0F4FF;--muted:#6B7499; }
+    body { font-family:'Barlow',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    .hero { background:linear-gradient(135deg,#0C0E14 0%,#1a0a0a 50%,#0C0E14 100%); border-bottom:3px solid var(--red); padding:40px 20px 32px; text-align:center; position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 50% -20%,rgba(220,38,38,0.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 10% 110%,rgba(251,191,36,0.08) 0%,transparent 60%); pointer-events:none; }
+    .hero-eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; font-weight:700; letter-spacing:3.5px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+    .hero h1 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(2.4rem,8vw,4.2rem); font-weight:800; text-transform:uppercase; line-height:0.95; color:#fff; letter-spacing:-0.5px; }
+    .hero h1 em { font-style:normal; color:var(--gold); }
+    .hero-sub { margin-top:12px; font-size:0.9rem; color:var(--muted); }
+    .hero-badge { display:inline-flex; align-items:center; gap:6px; margin-top:16px; background:rgba(220,38,38,0.15); border:1px solid rgba(220,38,38,0.3); border-radius:4px; padding:5px 14px; font-family:'Barlow Condensed',sans-serif; font-size:0.82rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--red2); }
+    .dot { width:6px; height:6px; border-radius:50%; background:var(--red2); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+    .scoring-strip { background:var(--bg2); border-bottom:1px solid var(--border); padding:10px 20px; display:flex; justify-content:center; gap:24px; flex-wrap:wrap; }
+    .key-item { font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--muted); }
+    .key-item b { color:var(--gold); margin-right:4px; }
+    .table-section { max-width:860px; margin:32px auto; padding:0 16px 40px; }
+    table { width:100%; border-collapse:collapse; }
+    thead tr { border-bottom:2px solid var(--border); }
+    thead th { font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); padding:10px 14px; text-align:left; }
+    thead th.c { text-align:center; }
+    tbody tr { border-bottom:1px solid var(--border); transition:background 0.15s; }
+    tbody tr:hover { background:var(--bg3); }
+    tbody tr.rank-1 { background:rgba(251,191,36,0.06); }
+    tbody tr.rank-2 { background:rgba(180,180,200,0.04); }
+    tbody tr.rank-3 { background:rgba(180,100,40,0.04); }
+    td { padding:14px 14px; vertical-align:middle; }
+    td.c { text-align:center; }
+    .pos-wrap { display:flex; align-items:center; justify-content:center; width:32px; }
+    .medal { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; }
+    .medal-1 { background:var(--gold); color:#0C0E14; }
+    .medal-2 { background:#C0C8D8; color:#0C0E14; }
+    .medal-3 { background:#CD7F32; color:#fff; }
+    .medal-n { color:var(--muted); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.95rem; }
+    .player-name { font-family:'Barlow Condensed',sans-serif; font-size:1.2rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#fff; line-height:1.1; }
+    .team-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:5px; }
+    .tag { font-size:0.7rem; font-weight:500; color:var(--muted); background:var(--bg3); border:1px solid var(--border); border-radius:3px; padding:2px 7px; white-space:nowrap; }
+    .stat { font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:#8898BB; text-align:center; }
+    .pts-cell { text-align:center; }
+    .pts-val { font-family:'Barlow Condensed',sans-serif; font-size:1.6rem; font-weight:800; color:var(--gold); line-height:1; }
+    .pts-label { font-family:'Barlow Condensed',sans-serif; font-size:0.6rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); }
+    .footer-bar { text-align:center; padding:0 20px 40px; font-size:0.78rem; color:var(--muted); font-family:'Barlow Condensed',sans-serif; letter-spacing:0.5px; }
+    @media(max-width:500px){.tag{font-size:0.65rem;padding:1px 5px}.player-name{font-size:1rem}.pts-val{font-size:1.3rem}td{padding:11px 8px}}
+    @media(prefers-reduced-motion:reduce){.dot{animation:none}tbody tr{transition:none}}
   </style>
 </head>
 <body>
-
   <header class="hero">
     <div class="hero-eyebrow">FIFA World Cup 2026</div>
     <h1>Sweepstake<br><em>League Table</em></h1>
     <p class="hero-sub">4 teams per player &bull; Points tallied after every matchday</p>
-    <div class="hero-badge">
-      <span class="dot"></span>
-      <span id="status-label">Awaiting kick-off &mdash; 11 June</span>
-    </div>
+    <div class="hero-badge"><span class="dot"></span><span>Last updated: 11 June 2026</span></div>
   </header>
-
   <div class="scoring-strip">
     <div class="key-item"><b>3</b> Win</div>
     <div class="key-item"><b>1</b> Draw</div>
     <div class="key-item"><b>0</b> Loss</div>
   </div>
-
   <section class="table-section">
-    <div class="table-wrap">
+    <div style="overflow-x:auto">
       <table>
-        <thead>
-          <tr>
-            <th class="c">#</th>
-            <th>Player</th>
-            <th class="c">W</th>
-            <th class="c">D</th>
-            <th class="c">L</th>
-            <th class="c">PTS</th>
-          </tr>
-        </thead>
+        <thead><tr><th class="c">#</th><th>Player</th><th class="c">W</th><th class="c">D</th><th class="c">L</th><th class="c">PTS</th></tr></thead>
         <tbody id="tbody"></tbody>
       </table>
     </div>
   </section>
-
-  <div class="footer-bar" id="footer-updated">Last updated: —</div>
-
+  <div class="footer-bar">Last updated: 11 June 2026 &bull; World Cup 2026 Sweepstake</div>
 <script>
-  const STORAGE_KEY = "sweepstake_data";
-
   const players = [
-    { name: "Lex",  teams: ["Brazil","Austria","Tunisia","Cape Verde"] },
-    { name: "KB",   teams: ["Uruguay","USA","Bosnia Herzegovina","Uzbekistan"] },
-    { name: "WOP",  teams: ["France","Australia","Iran","Panama"] },
-    { name: "Bash", teams: ["Argentina","Japan","Saudi Arabia","Jordan"] },
-    { name: "Fou",  teams: ["Mexico","South Korea","Czechia","Haiti"] },
-    { name: "Hish", teams: ["England","Senegal","Paraguay","Qatar"] },
-    { name: "SLY",  teams: ["Portugal","Switzerland","Norway","South Africa"] },
-    { name: "QC",   teams: ["Colombia","Canada","Algeria","Ghana"] },
-    { name: "Saad", teams: ["Netherlands","Morocco","Turkey","Iraq"] },
-    { name: "Sam",  teams: ["Spain","Croatia","Egypt","Curaçao"] },
-    { name: "Naj",  teams: ["Belgium","Ivory Coast","Sweden","New Zealand"] },
-    { name: "Toff", teams: ["Germany","Ecuador","Scotland","DR Congo"] },
+    { name: "Lex", teams: ["Brazil","Austria","Tunisia","Cape Verde"], w:0, d:0, l:0 },
+    { name: "KB", teams: ["Uruguay","USA","Bosnia Herzegovina","Uzbekistan"], w:0, d:0, l:0 },
+    { name: "WOP", teams: ["France","Australia","Iran","Panama"], w:0, d:0, l:0 },
+    { name: "Bash", teams: ["Argentina","Japan","Saudi Arabia","Jordan"], w:0, d:0, l:0 },
+    { name: "Fou", teams: ["Mexico","South Korea","Czechia","Haiti"], w:1, d:0, l:0 },
+    { name: "Hish", teams: ["England","Senegal","Paraguay","Qatar"], w:0, d:0, l:0 },
+    { name: "SLY", teams: ["Portugal","Switzerland","Norway","South Africa"], w:0, d:0, l:1 },
+    { name: "QC", teams: ["Colombia","Canada","Algeria","Ghana"], w:0, d:0, l:0 },
+    { name: "Saad", teams: ["Netherlands","Morocco","Turkey","Iraq"], w:0, d:0, l:0 },
+    { name: "Sam", teams: ["Spain","Croatia","Egypt","Curaçao"], w:0, d:0, l:0 },
+    { name: "Naj", teams: ["Belgium","Ivory Coast","Sweden","New Zealand"], w:0, d:0, l:0 },
+    { name: "Toff", teams: ["Germany","Ecuador","Scotland","DR Congo"], w:0, d:0, l:0 }
   ];
-
-  function loadData() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
-    catch { return {}; }
-  }
-
-  function getTeam(data, team) {
-    return data[team] || { w: 0, d: 0, l: 0 };
-  }
-
+  const pts = p => p.w*3+p.d;
   function render() {
-    const data = loadData();
-
-    // Aggregate W/D/L per player from their teams
-    const enriched = players.map(p => {
-      let w = 0, d = 0, l = 0;
-      p.teams.forEach(t => {
-        const td = getTeam(data, t);
-        w += td.w || 0;
-        d += td.d || 0;
-        l += td.l || 0;
-      });
-      return { ...p, w, d, l };
+    const sorted = [...players].sort((a,b)=>pts(b)-pts(a)||b.w-a.w||b.d-a.d);
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
+    sorted.forEach((p,i)=>{
+      const pos=i+1, rc=pos<=3?'rank-'+pos:'';
+      const badge=pos<=3?'<span class="medal medal-'+pos+'">'+pos+'</span>':'<span class="medal-n">'+pos+'</span>';
+      const tags=p.teams.map(t=>'<span class="tag">'+t+'</span>').join('');
+      tbody.innerHTML+='<tr class="'+rc+'"><td class="c"><div class="pos-wrap">'+badge+'</div></td><td><div class="player-name">'+p.name+'</div><div class="team-tags">'+tags+'</div></td><td class="stat">'+p.w+'</td><td class="stat">'+p.d+'</td><td class="stat">'+p.l+'</td><td class="pts-cell"><div class="pts-val">'+pts(p)+'</div><div class="pts-label">pts</div></td></tr>';
     });
-
-    const sorted = [...enriched].sort((a, b) => {
-      const pa = a.w * 3 + a.d;
-      const pb = b.w * 3 + b.d;
-      return pb - pa || b.w - a.w || b.d - a.d;
-    });
-
-    const tbody = document.getElementById("tbody");
-    tbody.innerHTML = "";
-
-    sorted.forEach((p, i) => {
-      const pos = i + 1;
-      const rankClass = pos <= 3 ? `rank-${pos}` : "";
-      const pts = p.w * 3 + p.d;
-
-      let badge;
-      if (pos === 1)      badge = `<span class="medal medal-1">1</span>`;
-      else if (pos === 2) badge = `<span class="medal medal-2">2</span>`;
-      else if (pos === 3) badge = `<span class="medal medal-3">3</span>`;
-      else                badge = `<span class="medal-n">${pos}</span>`;
-
-      const tags = p.teams.map(t => `<span class="tag">${t}</span>`).join("");
-
-      tbody.innerHTML += `
-        <tr class="${rankClass}">
-          <td class="c"><div class="pos-wrap">${badge}</div></td>
-          <td>
-            <div class="player-name">${p.name}</div>
-            <div class="team-tags">${tags}</div>
-          </td>
-          <td class="stat">${p.w}</td>
-          <td class="stat">${p.d}</td>
-          <td class="stat">${p.l}</td>
-          <td class="pts-cell">
-            <div class="pts-val">${pts}</div>
-            <div class="pts-label">pts</div>
-          </td>
-        </tr>`;
-    });
-
-    // Footer timestamp
-    const footer = document.getElementById("footer-updated");
-    if (data.__lastUpdated) {
-      const ts = new Date(data.__lastUpdated).toLocaleString("en-GB", {
-        day: "numeric", month: "long", year: "numeric",
-        hour: "2-digit", minute: "2-digit"
-      });
-      footer.textContent = `Last updated: ${ts}`;
-    } else {
-      footer.textContent = "No results logged yet";
-    }
   }
-
   render();
-
-  // Auto-refresh if admin updates data in another tab
-  window.addEventListener("storage", e => {
-    if (e.key === STORAGE_KEY) render();
-  });
 </script>
 </body>
 </html>
