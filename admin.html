@@ -261,8 +261,39 @@
   function showApp() {
     document.getElementById('app').style.display = 'block';
     const hasToken = !!localStorage.getItem(TOKEN_KEY);
+    document.getElementById('publish-btn').textContent = hasToken ? '🚀 Publish Live' : '⬇ Download Table';
+    loadFromGitHub();
+  }
+
+  // ── LOAD FROM GITHUB ──
+  async function loadFromGitHub() {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) { loadResults(); render(); return; }
     const btn = document.getElementById('publish-btn');
-    btn.textContent = hasToken ? '🚀 Publish Live' : '⬇ Download Table';
+    const orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spin"></span>Loading scores...';
+    try {
+      const apiBase = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
+      const res = await fetch(apiBase, { headers: { Authorization: `token ${token}` } });
+      if (!res.ok) throw new Error(`GitHub ${res.status}`);
+      const data = await res.json();
+      const html = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
+      const m = html.match(/<script id="wc-results" type="application\/json">([\s\S]*?)<\/script>/);
+      if (m) {
+        results = JSON.parse(m[1]);
+        saveResults();
+        showToast('All scores loaded from GitHub ✓');
+      } else {
+        loadResults();
+        showToast('Ready — add today’s results');
+      }
+    } catch(e) {
+      loadResults();
+      showToast('Using local scores (sync failed)', true);
+    }
+    btn.disabled = false;
+    btn.innerHTML = orig;
     render();
   }
 
@@ -419,6 +450,7 @@
     </div>
   </section>
   <div class="footer-bar">Last updated: ${today} &bull; World Cup 2026 Sweepstake</div>
+<script id="wc-results" type="application/json">${JSON.stringify(results)}<\/script>
 <script>
   const players = [
 ${playerData}
